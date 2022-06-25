@@ -15,12 +15,11 @@ class HelloPage extends StatelessWidget {
           children:<Widget> [
             Text('Hello, Lets find out more about you'),
 
-            Container(
-              margin: EdgeInsets.only(top: 15),
-                child: ButtonNext(nextPage: 'genderPage', textButton: 'Next',))
+
           ],
         ),
       ),
+      floatingActionButton: ButtonNext(nextPage: 'genderPage', textButton: 'Next',),
     );
   }
 }

@@ -40,9 +40,10 @@ class _GenderPageState extends State<GenderPage> {
             ],
           ),
         ),
-            ButtonNext(nextPage: 'agePage')
+
       ],
       ),
+      floatingActionButton: ButtonNext(nextPage: 'agePage'),
     );
   }
 }
