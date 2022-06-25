@@ -1,4 +1,6 @@
 import 'dart:ui';
+import 'package:calory_tracker/Widgets/expandable_list.dart';
+import 'package:calory_tracker/Widgets/expandablepanel.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
@@ -26,14 +28,9 @@ class CalculatorFoodPage extends StatelessWidget {
               child: _DaysDiner(),
             ),
             Container(
+              margin: EdgeInsets.all(10),
               height: 600,
-              child: ListView.builder(
-                  physics: NeverScrollableScrollPhysics(),
-                  shrinkWrap: true,
-                  itemCount: 100,
-                  itemBuilder: (_, int index) => ListTile(
-                        title: Text('Item $index'),
-                      )),
+              child: ExpandablePanel()
             ),
           ],
         ),
