@@ -1,4 +1,4 @@
-import 'package:calory_tracker/Widgets/Button_Next.dart';
+import 'package:calory_tracker/Widgets/button_next.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
@@ -31,7 +31,7 @@ class GoalPage extends StatelessWidget {
           ),
         ],
       ),
-      floatingActionButton: ButtonNext(nextPage: 'nutrientgoal'),
+      floatingActionButton: const ButtonNext(nextPage: 'nutrientGoal'),
     );
   }
 }

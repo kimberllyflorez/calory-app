@@ -19,9 +19,12 @@ class CalculatorFoodPage extends StatelessWidget {
               height: 350,
               width: double.infinity,
               decoration: BoxDecoration(
-                  color: Colors.green,
-                  borderRadius: BorderRadius.only(
-                      bottomLeft: Radius.circular(45), bottomRight: Radius.circular(45))),
+                color: Colors.green,
+                borderRadius: BorderRadius.only(
+                  bottomLeft: Radius.circular(45),
+                  bottomRight: Radius.circular(45),
+                ),
+              ),
               // height: height * 0.5,
             ),
             Container(
@@ -30,7 +33,7 @@ class CalculatorFoodPage extends StatelessWidget {
             Container(
               margin: EdgeInsets.all(10),
               height: 600,
-              child: ExpandablePanel()
+              child: Expandablewidget(),
             ),
           ],
         ),
@@ -38,6 +41,7 @@ class CalculatorFoodPage extends StatelessWidget {
     );
   }
 }
+
 class _DaysDiner extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
@@ -47,9 +51,7 @@ class _DaysDiner extends StatelessWidget {
         Icon(Icons.arrow_back_outlined),
         Text('aqui va el dia'),
         Icon(Icons.arrow_forward_outlined),
-
       ],
     );
   }
-
 }

@@ -7,12 +7,15 @@ class Expandablewidget extends StatefulWidget {
   @override
   State<Expandablewidget> createState() => _ExpandablewidgetState();
 }
+
 class Item {
   Item({
     required this.headerValue,
-});
+  });
+
   String headerValue;
 }
+
 class _ExpandablewidgetState extends State<Expandablewidget> {
   @override
   Widget build(BuildContext context) {
@@ -46,7 +49,11 @@ class _ExpandableListViewState extends State<ExpandableListView> {
   @override
   Widget build(BuildContext context) {
     return Container(
-      margin: const EdgeInsets.only(top: 1.0, left: 5, right: 5),
+      margin: const EdgeInsets.only(
+        top: 1.0,
+        left: 5,
+        right: 5,
+      ),
       child: Column(
         children: <Widget>[
           Container(
@@ -56,17 +63,22 @@ class _ExpandableListViewState extends State<ExpandableListView> {
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: <Widget>[
                 Container(
-                  child: const Text('aqui va una imagen '),
-                  color: Colors.redAccent,
+                  margin: const EdgeInsets.all(5),
                   width: 50,
-                  height: 30,
+                  height: 50,
+                  decoration: BoxDecoration(
+                    borderRadius: BorderRadius.circular(20),
+                  ),
+                  child: const Image(
+                    image: const AssetImage('assets/food.png'),
+                    fit: BoxFit.fill,
+                  ),
                 ),
                 Column(
                   children: [
                     Text(
                       widget.title,
-                      style:
-                           TextStyle(fontWeight: FontWeight.w400, color: Colors.white, fontSize: 25),
+                      style: const TextStyle(fontWeight: FontWeight.w400, color: Colors.white, fontSize: 25),
                     ),
                     const SizedBox(height: 10),
                     const Text(' 0 kcal')
@@ -114,10 +126,9 @@ class _ExpandableListViewState extends State<ExpandableListView> {
               ],
             ),
           ),
-
           ExpandableContainer(
             expanded: expandFlag,
-            child: _bodyExpanded()
+            child: const _BodyExpanded(),
           )
         ],
       ),
@@ -135,7 +146,7 @@ class ExpandableContainer extends StatelessWidget {
     Key? key,
     required this.child,
     this.collapsedHeight = 0.0,
-    this.expandedHeight = 90.0,
+    this.expandedHeight = 70.0,
     this.expanded = true,
   }) : super(key: key);
 
@@ -155,37 +166,46 @@ class ExpandableContainer extends StatelessWidget {
   }
 }
 
-class _bodyExpanded extends StatelessWidget {
-  const _bodyExpanded ({Key? key}) : super(key: key);
+class _BodyExpanded extends StatelessWidget {
+  const _BodyExpanded({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
     return Container(
-    alignment: Alignment.center,
-    decoration: BoxDecoration(
-    borderRadius: BorderRadius.circular(30),
-    color: Colors.white,
-    border: Border.all(width: 3.0, color: Colors.green),
-    ),
-    child: Row(
-    mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-    crossAxisAlignment: CrossAxisAlignment.center,
-    children: const [
-    Icon(
-    Icons.add,
-    color: Colors.green,
-    ),
-    Text(
-    "Add food",
-    textAlign: TextAlign.center,
-    style: TextStyle(
-    fontWeight: FontWeight.bold,
-  color: Colors.green,
-  fontSize: 20,
-  ),
-  ),
-  ],
-  ),
-  );
+      alignment: Alignment.center,
+      margin: EdgeInsets.symmetric(horizontal: 10),
+      decoration: BoxDecoration(
+        borderRadius: BorderRadius.circular(30),
+        color: Colors.white,
+        border: Border.all(width: 3.0, color: Colors.green),
+      ),
+      child: Row(
+        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+        crossAxisAlignment: CrossAxisAlignment.center,
+        children: [
+          InkWell(
+            onTap: () => Navigator.pushNamed(context, 'searchFood'),
+            child: Text(
+              "+",
+              textAlign: TextAlign.center,
+              style: TextStyle(
+                fontWeight: FontWeight.bold,
+                color: Colors.green,
+                fontSize: 20,
+              ),
+            ),
+          ),
+          const Text(
+            "Add food",
+            textAlign: TextAlign.center,
+            style: TextStyle(
+              fontWeight: FontWeight.bold,
+              color: Colors.green,
+              fontSize: 20,
+            ),
+          ),
+        ],
+      ),
+    );
   }
 }
