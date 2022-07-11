@@ -7,19 +7,19 @@ class HelloPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-
       body: Center(
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           crossAxisAlignment: CrossAxisAlignment.center,
-          children:<Widget> [
+          children: const <Widget>[
             Text('Hello, Lets find out more about you'),
-
-
           ],
         ),
       ),
-      floatingActionButton: ButtonNext(nextPage: 'genderPage', textButton: 'Next',),
+      floatingActionButton: const ButtonNext(
+        nextPage: 'genderPage',
+        textButton: 'Next',
+      ),
     );
   }
 }
