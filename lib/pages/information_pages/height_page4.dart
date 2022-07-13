@@ -1,10 +1,17 @@
 import 'package:calory_tracker/Widgets/button_next.dart';
+import 'package:calory_tracker/constants/user_constants.dart';
+import 'package:calory_tracker/helpers/preference.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 
-class HeightPage extends StatelessWidget {
+class HeightPage extends StatefulWidget {
   const HeightPage({Key? key}) : super(key: key);
 
+  @override
+  State<HeightPage> createState() => _HeightPageState();
+}
+
+class _HeightPageState extends State<HeightPage> {
   @override
   Widget build(BuildContext context) {
     final width = MediaQuery.of(context).size.width;
@@ -24,16 +31,17 @@ class HeightPage extends StatelessWidget {
                   child: TextFormField(
                     textAlign: TextAlign.center,
                     autofocus: false,
-                    initialValue: '180',
+                    initialValue: '190',
                     style: TextStyle(color: Colors.green, fontWeight: FontWeight.w600, fontSize: 60),
                     //style: TextStyle(color: Colors.green, fontWeight: FontWeight.w300),,
-                    decoration: InputDecoration(
+                    decoration: const InputDecoration(
                       border: InputBorder.none,
                       //hoverColor: Colors.green,
                     ),
                       inputFormatters: [
                         LengthLimitingTextInputFormatter(3),
-                      ]
+                      ],
+                    onChanged:(value)=> _onPressed(UserConstants.height, value),
                   ),
                 ),
                 Text('cm')
@@ -42,8 +50,16 @@ class HeightPage extends StatelessWidget {
           ),
         ],
       ),
-      floatingActionButton: ButtonNext(nextPage: 'weightPage')
+      floatingActionButton: ButtonNext(onTap: _onTap)
       ,
     );
   }
+
+  _onPressed (String key, value){
+    PreferenceUtils.setString(key, value);
+  }
+
+ _onTap() {
+   Navigator.pushNamed(context, 'weightPage');
+ }
 }

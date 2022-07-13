@@ -1,9 +1,16 @@
 import 'package:calory_tracker/Widgets/button_next.dart';
+import 'package:calory_tracker/constants/user_constants.dart';
+import 'package:calory_tracker/helpers/preference.dart';
 import 'package:flutter/material.dart';
 
-class weightPage extends StatelessWidget {
+class weightPage extends StatefulWidget {
   const weightPage({Key? key}) : super(key: key);
 
+  @override
+  State<weightPage> createState() => _weightPageState();
+}
+
+class _weightPageState extends State<weightPage> {
   @override
   Widget build(BuildContext context) {
     final width = MediaQuery.of(context).size.width;
@@ -24,8 +31,9 @@ class weightPage extends StatelessWidget {
                     textAlign: TextAlign.center,
                     autofocus: false,
                     initialValue: '80.0',
-                    style: TextStyle(color: Colors.green, fontWeight: FontWeight.w600, fontSize: 60),
-                    decoration: InputDecoration(
+                    onChanged: (value) => _onPressed (UserConstants.weight, value),
+                    style: const TextStyle(color: Colors.green, fontWeight: FontWeight.w600, fontSize: 60),
+                    decoration: const  InputDecoration(
                       border: InputBorder.none,
                     ),
                   ),
@@ -36,7 +44,15 @@ class weightPage extends StatelessWidget {
           ),
         ],
       ),
-      floatingActionButton: ButtonNext(nextPage: 'activityLabelPage'),
+      floatingActionButton: ButtonNext(onTap: _onTap),
     );
+  }
+
+  _onPressed(String key, String value){
+    PreferenceUtils.setString(key, value);
+  }
+
+  _onTap(){
+    Navigator.pushNamed(context, 'activityLabelPage');
   }
 }

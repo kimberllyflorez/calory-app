@@ -1,6 +1,5 @@
 import 'dart:ui';
 import 'package:calory_tracker/Widgets/expandable_list.dart';
-import 'package:calory_tracker/Widgets/expandablepanel.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
@@ -9,7 +8,6 @@ class CalculatorFoodPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    //final height = MediaQuery.of(context).size.height;
     return Scaffold(
       body: SingleChildScrollView(
         child: Column(
@@ -28,7 +26,7 @@ class CalculatorFoodPage extends StatelessWidget {
               // height: height * 0.5,
             ),
             Container(
-              child: _DaysDiner(),
+              child: _foodHistory(),
             ),
             Container(
               margin: EdgeInsets.all(10),
@@ -42,7 +40,7 @@ class CalculatorFoodPage extends StatelessWidget {
   }
 }
 
-class _DaysDiner extends StatelessWidget {
+class _foodHistory extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Row(

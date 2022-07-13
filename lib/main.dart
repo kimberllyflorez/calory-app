@@ -1,9 +1,10 @@
-import 'package:provider/provider.dart';
-
-import 'package:calory_tracker/pages/pages.dart';
+import 'package:calory_tracker/constants/user_constants.dart';
+import 'package:calory_tracker/helpers/preference.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-
-import 'repository/food_provider.dart';
+import 'package:calory_tracker/providers/food_provider.dart';
+import 'package:calory_tracker/pages/pages.dart';
+import 'package:provider/provider.dart';
 
 void main() {
   runApp(const AppState());
@@ -32,7 +33,20 @@ class MyApp extends StatelessWidget {
     return MaterialApp(
       debugShowCheckedModeBanner: false,
       theme: ThemeData.dark(),
-      initialRoute: 'helloPage',
+      home: FutureBuilder(
+        future: _loadData(),
+        builder: (context, AsyncSnapshot<bool?> snapshot) {
+          if(snapshot.connectionState == ConnectionState.waiting){
+            return const Scaffold(
+              body: Center(
+                child: CircularProgressIndicator(),
+              ),
+            );
+          }
+          final result = snapshot.data ?? false;
+          return result ? const CalculatorFoodPage() : const HelloPage();
+        },
+      ),
       routes: {
         'helloPage': (_) => const HelloPage(),
         'genderPage': (_) => const GenderPage(),
@@ -46,5 +60,10 @@ class MyApp extends StatelessWidget {
         'searchFood': (_) => const SearchFood(),
       },
     );
+  }
+
+  Future<bool?> _loadData() async {
+    await Future.delayed(const Duration(milliseconds: 1000),(){});
+    return PreferenceUtils.getBool(UserConstants.saveData);
   }
 }

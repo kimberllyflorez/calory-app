@@ -16,10 +16,14 @@ class HelloPage extends StatelessWidget {
           ],
         ),
       ),
-      floatingActionButton: const ButtonNext(
-        nextPage: 'genderPage',
-        textButton: 'Next',
+      floatingActionButton:  ButtonNext(
+        onTap: () => _onTap(context),
       ),
     );
+
+  }
+  _onTap(BuildContext context){
+    Navigator.pushNamed(context , 'genderPage');
+
   }
 }

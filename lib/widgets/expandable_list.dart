@@ -70,8 +70,8 @@ class _ExpandableListViewState extends State<ExpandableListView> {
                     borderRadius: BorderRadius.circular(20),
                   ),
                   child: const Image(
-                    image: const AssetImage('assets/food.png'),
-                    fit: BoxFit.fill,
+                    image:  AssetImage('assets/ic_dinner.png'),
+                    fit: BoxFit.cover,
                   ),
                 ),
                 Column(
@@ -92,7 +92,8 @@ class _ExpandableListViewState extends State<ExpandableListView> {
                           alignment: Alignment.centerRight,
                           child: Center(
                             child: Icon(
-                              expandFlag ? Icons.keyboard_arrow_up : Icons.keyboard_arrow_down,
+                              expandFlag ? Icons.keyboard_arrow_up :
+                              Icons.keyboard_arrow_down,
                               color: Colors.white,
                               size: 20.0,
                             ),
