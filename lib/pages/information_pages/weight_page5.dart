@@ -11,6 +11,13 @@ class weightPage extends StatefulWidget {
 }
 
 class _weightPageState extends State<weightPage> {
+  late final TextEditingController weightController;
+
+  @override
+  void initState() {
+    weightController = TextEditingController(text: '80');
+    super.initState();
+  }
   @override
   Widget build(BuildContext context) {
     final width = MediaQuery.of(context).size.width;
@@ -30,7 +37,7 @@ class _weightPageState extends State<weightPage> {
                   child: TextFormField(
                     textAlign: TextAlign.center,
                     autofocus: false,
-                    initialValue: '80.0',
+                    controller: weightController,
                     onChanged: (value) => _onPressed (UserConstants.weight, value),
                     style: const TextStyle(color: Colors.green, fontWeight: FontWeight.w600, fontSize: 60),
                     decoration: const  InputDecoration(
@@ -52,7 +59,16 @@ class _weightPageState extends State<weightPage> {
     PreferenceUtils.setString(key, value);
   }
 
-  _onTap(){
-    Navigator.pushNamed(context, 'activityLabelPage');
+  _onTap() {
+    final age = int.parse(weightController.text);
+
+    if (age <= 0) {
+      ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+        content: Container(child: Text("Weight is not 0 ")),
+      ));
+      return;
+    } else {
+      Navigator.pushNamed(context, 'activityLabelPage');
+    }
   }
 }

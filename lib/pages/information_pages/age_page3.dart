@@ -71,7 +71,9 @@ class _AgePageState extends State<AgePage> {
     final age = int.parse(ageController.text);
 
     if (age <= 1) {
-      print('valor xf');
+      ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+        content: Container( child:  Text("Sending Message")),
+      ));
       return;
     } else {
       Navigator.pushNamed(context, 'heightPage');

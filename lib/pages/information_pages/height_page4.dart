@@ -12,6 +12,13 @@ class HeightPage extends StatefulWidget {
 }
 
 class _HeightPageState extends State<HeightPage> {
+  late final TextEditingController heightController;
+
+  @override
+  void initState() {
+    heightController = TextEditingController(text: '190');
+    super.initState();
+  }
   @override
   Widget build(BuildContext context) {
     final width = MediaQuery.of(context).size.width;
@@ -31,7 +38,7 @@ class _HeightPageState extends State<HeightPage> {
                   child: TextFormField(
                     textAlign: TextAlign.center,
                     autofocus: false,
-                    initialValue: '190',
+                    controller: heightController,
                     style: TextStyle(color: Colors.green, fontWeight: FontWeight.w600, fontSize: 60),
                     //style: TextStyle(color: Colors.green, fontWeight: FontWeight.w300),,
                     decoration: const InputDecoration(
@@ -60,6 +67,15 @@ class _HeightPageState extends State<HeightPage> {
   }
 
  _onTap() {
-   Navigator.pushNamed(context, 'weightPage');
+   final age = int.parse(heightController.text);
+
+   if (age <= 0) {
+     ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+       content: Container( child:  Text("heihht is not 0 ")),
+     ));
+     return;
+   } else {
+     Navigator.pushNamed(context, 'weightPage');
+   }
  }
 }

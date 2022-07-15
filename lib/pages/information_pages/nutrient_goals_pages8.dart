@@ -13,9 +13,25 @@ class NutrientGoal extends StatefulWidget {
 }
 
 class _NutrientGoalState extends State<NutrientGoal> {
+  late final TextEditingController carbController;
+  late final TextEditingController proteinController;
+  late final TextEditingController fatController;
+
+  @override
+  void initState() {
+    carbController = TextEditingController(text: '0');
+    proteinController = TextEditingController(text: '0');
+    fatController = TextEditingController(text: '0');
+
+    super.initState();
+  }
+
   @override
   Widget build(BuildContext context) {
-    final width = MediaQuery.of(context).size.width;
+    final width = MediaQuery
+        .of(context)
+        .size
+        .width;
 
     return Scaffold(
       body: Column(
@@ -29,17 +45,17 @@ class _NutrientGoalState extends State<NutrientGoal> {
               children: [
                 NutrientsGoal(
                   nameNutrint: '% carbs',
-                  initialValue: '0',
+                  nutrientController: carbController,
                   onChanged: (value) => _onChanged(UserConstants.carbGoal, value),
                 ),
                 NutrientsGoal(
                   nameNutrint: '% Protein',
-                  initialValue: '0',
+                  nutrientController: proteinController,
                   onChanged: (value) => _onChanged(UserConstants.proteinGoal, value),
                 ),
                 NutrientsGoal(
-                  nameNutrint: '% fats',
-                  initialValue: '0',
+                  nameNutrint: '% fats  ',
+                  nutrientController: fatController,
                   onChanged: (value) => _onChanged(UserConstants.fatGoal, value),
                 ),
               ],
@@ -56,21 +72,36 @@ class _NutrientGoalState extends State<NutrientGoal> {
   }
 
   _onTap() {
+    final carbPercent = int.parse(carbController.text);
+    final fatPercent = int.parse(fatController.text);
+    final proteinPercent = int.parse(proteinController.text);
+
+    final totalPercent =(carbPercent + fatPercent + proteinPercent);
+
+    if (totalPercent != 100) {
+      ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+        content: Container(child: Text("the total percent must be 100")),
+      ));
+      return;
+    }
     PreferenceUtils.setBool(UserConstants.saveData, true);
     Navigator.pushNamed(context, 'calculatorFood');
   }
+
 }
 
 class NutrientsGoal extends StatelessWidget {
-  final String initialValue;
+
   final String nameNutrint;
   final Function(String)? onChanged;
+  final TextEditingController? nutrientController;
 
   const NutrientsGoal({
     Key? key,
-    required this.initialValue,
+
     required this.nameNutrint,
     this.onChanged,
+    this.nutrientController
   }) : super(key: key);
 
   @override
@@ -82,7 +113,7 @@ class NutrientsGoal extends StatelessWidget {
           child: TextFormField(
             textAlign: TextAlign.center,
             autofocus: false,
-            initialValue: initialValue,
+            controller: nutrientController,
             style: const TextStyle(
               color: Colors.green,
               fontWeight: FontWeight.w600,
@@ -93,6 +124,7 @@ class NutrientsGoal extends StatelessWidget {
             ),
             inputFormatters: [
               LengthLimitingTextInputFormatter(2),
+              FilteringTextInputFormatter.digitsOnly,
             ],
             onChanged: onChanged,
           ),
