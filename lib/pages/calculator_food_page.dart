@@ -2,6 +2,9 @@ import 'dart:ui';
 import 'package:calory_tracker/Widgets/expandable_list.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:percent_indicator/circular_percent_indicator.dart';
+
+import '../widgets/percent_indicator.dart';
 
 class CalculatorFoodPage extends StatelessWidget {
   const CalculatorFoodPage({Key? key}) : super(key: key);
@@ -13,16 +16,17 @@ class CalculatorFoodPage extends StatelessWidget {
         child: Column(
           children: [
             Container(
-              margin: EdgeInsets.only(bottom: 15),
+              margin: const EdgeInsets.only(bottom: 15),
               height: 350,
               width: double.infinity,
-              decoration: BoxDecoration(
+              decoration:const  BoxDecoration(
                 color: Colors.green,
                 borderRadius: BorderRadius.only(
                   bottomLeft: Radius.circular(45),
                   bottomRight: Radius.circular(45),
                 ),
               ),
+              child:PercentIndicator()
               // height: height * 0.5,
             ),
             Container(
