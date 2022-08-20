@@ -1,10 +1,6 @@
-import 'dart:ui';
-import 'package:calory_tracker/Widgets/expandable_list.dart';
-import 'package:flutter/cupertino.dart';
+import 'package:calory_tracker/widgets/ExpandableWidget/list_foods_widget.dart';
 import 'package:flutter/material.dart';
-import 'package:percent_indicator/circular_percent_indicator.dart';
-
-import '../widgets/percent_indicator.dart';
+import '../widgets/percent_indicator_widget.dart';
 
 class CalculatorFoodPage extends StatelessWidget {
   const CalculatorFoodPage({Key? key}) : super(key: key);
@@ -15,41 +11,51 @@ class CalculatorFoodPage extends StatelessWidget {
       body: SingleChildScrollView(
         child: Column(
           children: [
-            Container(
-              margin: const EdgeInsets.only(bottom: 15),
-              height: 350,
-              width: double.infinity,
-              decoration:const  BoxDecoration(
-                color: Colors.green,
-                borderRadius: BorderRadius.only(
-                  bottomLeft: Radius.circular(45),
-                  bottomRight: Radius.circular(45),
-                ),
-              ),
-              child:PercentIndicator()
-              // height: height * 0.5,
-            ),
-            Container(
-              child: _foodHistory(),
-            ),
-            Container(
-              margin: EdgeInsets.all(10),
-              height: 600,
-              child: Expandablewidget(),
-            ),
+            const CustomAppBar(),
+            _FoodHistory(),
+            ExpandableWidget(),
           ],
         ),
       ),
     );
   }
+
 }
 
-class _foodHistory extends StatelessWidget {
+class CustomAppBar extends StatelessWidget {
+  const CustomAppBar({Key? key}) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      margin: const EdgeInsets.only(bottom: 15),
+      height: MediaQuery.of(context).size.height * 0.4,
+      width: double.infinity,
+      decoration: const BoxDecoration(
+        gradient: LinearGradient(
+          begin: Alignment.center,
+          end: Alignment.bottomLeft,
+          colors: [
+            Colors.green,
+            Colors.yellow,
+          ],
+        ),
+        borderRadius: BorderRadius.only(
+          bottomLeft: Radius.circular(50),
+          bottomRight: Radius.circular(50),
+        ),
+      ),
+      child: const WidgetCustomeAppBar(),
+    );
+  }
+}
+
+class _FoodHistory extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Row(
       mainAxisAlignment: MainAxisAlignment.spaceAround,
-      children: [
+      children: const [
         Icon(Icons.arrow_back_outlined),
         Text('aqui va el dia'),
         Icon(Icons.arrow_forward_outlined),

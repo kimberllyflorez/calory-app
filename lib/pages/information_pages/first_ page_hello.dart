@@ -1,4 +1,4 @@
-import 'package:calory_tracker/Widgets/button_next.dart';
+import 'package:calory_tracker/Widgets/button_next_widget.dart';
 import 'package:flutter/material.dart';
 
 class HelloPage extends StatelessWidget {
@@ -24,6 +24,5 @@ class HelloPage extends StatelessWidget {
   }
   _onTap(BuildContext context){
     Navigator.pushNamed(context , 'genderPage');
-
   }
 }

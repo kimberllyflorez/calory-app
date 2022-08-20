@@ -1,10 +1,13 @@
 import 'package:calory_tracker/constants/user_constants.dart';
 import 'package:calory_tracker/helpers/preference.dart';
-import 'package:flutter/cupertino.dart';
+import 'package:calory_tracker/providers/theme_modo_provider.dart';
+import 'package:calory_tracker/routes/routes.dart';
+import 'package:calory_tracker/theme/app_theme.dart';
 import 'package:flutter/material.dart';
 import 'package:calory_tracker/providers/food_provider.dart';
 import 'package:calory_tracker/pages/pages.dart';
 import 'package:provider/provider.dart';
+import 'providers/products_provider.dart';
 
 void main() {
   runApp(const AppState());
@@ -18,21 +21,26 @@ class AppState extends StatelessWidget {
     return MultiProvider(
       providers: [
         ChangeNotifierProvider(create: (_) => FoodProvider()),
+        ChangeNotifierProvider(create: (_) => ProductsProvider()),
+        ChangeNotifierProvider(create: (_)=>ThemeSelectProvider()),
       ],
-      child: const MyApp(),
+      child: const CaloryApp(),
     );
   }
 }
 
-class MyApp extends StatelessWidget {
-  const MyApp({Key? key}) : super(key: key);
+class CaloryApp extends StatelessWidget {
+  const CaloryApp({Key? key}) : super(key: key);
 
   // This widget is the root of your application.
   @override
   Widget build(BuildContext context) {
+    final themeProvider = Provider.of<ThemeSelectProvider>(context);
     return MaterialApp(
       debugShowCheckedModeBanner: false,
-      theme: ThemeData.dark(),
+      theme: AppTheme.lightTheme,
+      darkTheme: AppTheme.dartTheme,
+      themeMode: themeProvider.theme,
       home: FutureBuilder(
         future: _loadData(),
         builder: (context, AsyncSnapshot<bool?> snapshot) {
@@ -47,18 +55,7 @@ class MyApp extends StatelessWidget {
           return result ? const CalculatorFoodPage() : const HelloPage();
         },
       ),
-      routes: {
-        'helloPage': (_) => const HelloPage(),
-        'genderPage': (_) => const GenderPage(),
-        'agePage': (_) => const AgePage(),
-        'heightPage': (_) => const HeightPage(),
-        'weightPage': (_) => const weightPage(),
-        'activityLabelPage': (_) => const ActivityLabelPage(),
-        'nutrientGoal': (_) => const NutrientGoal(),
-        'goalPage': (_) => const GoalPage(),
-        'calculatorFood': (_) => const CalculatorFoodPage(),
-        'searchFood': (_) => const SearchFood(),
-      },
+      routes: Routes.routes,
     );
   }
 

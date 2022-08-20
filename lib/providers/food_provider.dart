@@ -1,5 +1,4 @@
 import 'dart:async';
-
 import 'package:calory_tracker/helpers/debounce.dart';
 import 'package:calory_tracker/model/model_search.dart';
 import 'package:calory_tracker/repository/food_repository.dart';
