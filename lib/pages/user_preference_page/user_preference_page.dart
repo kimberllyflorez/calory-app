@@ -6,7 +6,12 @@ import 'package:flutter_phosphor_icons/flutter_phosphor_icons.dart';
 import 'package:provider/provider.dart';
 
 class UserPreferencePage extends StatelessWidget {
-  const UserPreferencePage({Key? key}) : super(key: key);
+  final double width;
+
+  const UserPreferencePage({
+    Key? key,
+    required this.width,
+  }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -15,8 +20,10 @@ class UserPreferencePage extends StatelessWidget {
       body: SingleChildScrollView(
         child: Column(
           children: [
-            BackgrounImageProfil(),
-            DataProfile(),
+            BackgroundImageProfile(
+              width: width,
+            ),
+            const DataProfile(),
             DayNightSwitcher(
               isDarkModeEnabled: theme,
               onStateChanged: (_) => onStateChanged(context, false),
@@ -29,7 +36,7 @@ class UserPreferencePage extends StatelessWidget {
 
   void onStateChanged(BuildContext context, bool isDarkModeEnabled) {
     final theme = Provider.of<ThemeSelectProvider>(context, listen: false);
-     theme.changeMode();
+    theme.changeMode();
   }
 }
 
@@ -43,7 +50,7 @@ class DataProfile extends StatelessWidget {
       shrinkWrap: true,
       itemBuilder: (BuildContext context, int index) {
         return ProfileButtons(
-          iconName: buttonsProfilList[index].NameButton,
+          iconName: buttonsProfilList[index].nameButton,
           iconButton: buttonsProfilList[index].iconButton,
           route: buttonsProfilList[index].routeNavigator,
         );
@@ -98,12 +105,12 @@ class ProfileButtons extends StatelessWidget {
 }
 
 class ProfileButtonModel {
-  final String NameButton;
+  final String nameButton;
   final IconData iconButton;
   final String? routeNavigator;
 
   ProfileButtonModel({
-    required this.NameButton,
+    required this.nameButton,
     required this.iconButton,
     this.routeNavigator,
   });
@@ -111,24 +118,23 @@ class ProfileButtonModel {
 
 final buttonsProfilList = <ProfileButtonModel>[
   ProfileButtonModel(
-    NameButton: 'caloric recalculation',
+    nameButton: 'caloric recalculation',
     iconButton: PhosphorIcons.calculator_fill,
   ),
   ProfileButtonModel(
-    NameButton: 'About me ',
+    nameButton: 'About me ',
     iconButton: PhosphorIcons.user_circle_gear_fill,
   ),
   ProfileButtonModel(
-    NameButton: 'my calendar',
+    nameButton: 'my calendar',
     iconButton: PhosphorIcons.calendar_check_fill,
   ),
   ProfileButtonModel(
-    NameButton: 'supplements',
+    nameButton: 'supplements',
     iconButton: PhosphorIcons.polygon,
   ),
   ProfileButtonModel(
-    NameButton: 'Training',
+    nameButton: 'Training',
     iconButton: PhosphorIcons.barbell_bold,
   ),
-
 ];

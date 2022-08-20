@@ -35,12 +35,12 @@ class CaloryApp extends StatelessWidget {
   // This widget is the root of your application.
   @override
   Widget build(BuildContext context) {
-    final themeProvider = Provider.of<ThemeSelectProvider>(context);
+    final theme = context.watch<ThemeSelectProvider>().theme;
     return MaterialApp(
       debugShowCheckedModeBanner: false,
       theme: AppTheme.lightTheme,
       darkTheme: AppTheme.dartTheme,
-      themeMode: themeProvider.theme,
+      themeMode: theme,
       home: FutureBuilder(
         future: _loadData(),
         builder: (context, AsyncSnapshot<bool?> snapshot) {

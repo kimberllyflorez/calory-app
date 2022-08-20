@@ -12,6 +12,5 @@ class Routes {
     'nutrientGoal': (_) => const MacronutrientPercent(),
     'goalPage': (_) => const GoalPage(),
     'calculatorFood': (_) => const CalculatorFoodPage(),
-    'editProfil': (_) => const UserPreferencePage(),
   };
 }

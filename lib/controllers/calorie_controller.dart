@@ -13,9 +13,9 @@ class CalorieController {
   final bool isWomen;
   final double height;
   final int age;
-  final double net ;
-  final int goal;
+  final double net;
 
+  final int goal;
 
   ///Constructor
   CalorieController({
@@ -48,17 +48,20 @@ class CalorieController {
   double calcGeb(double defaultMult, double weightMul, double heightMul, double ageMult) {
     return defaultMult + (weightMul * weight) + (heightMul * height) - (ageMult * age);
   }
-///thermal energy of the food
+
+  ///thermal energy of the food
   double etaEquation(double geb) {
     return geb * 1.1;
   }
-/// total energy expenditure
+
+  /// total energy expenditure
   double getEquation(double eta) {
     return eta * net;
   }
-///caloricAdjustment
+
+  ///caloricAdjustment
   double adjustCalorieEquation(double get, int adjustValue) {
-    if(adjustValue != 0){
+    if (adjustValue != 0) {
       return (get * adjustValue) / 100;
     }
     return get;

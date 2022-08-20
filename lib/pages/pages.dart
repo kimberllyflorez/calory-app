@@ -8,4 +8,4 @@ export 'package:calory_tracker/pages/information_pages/percent_macronutrient_pag
 export 'package:calory_tracker/pages/information_pages/goal_weight_page.dart';
 export 'package:calory_tracker/pages/calculator_food_page.dart';
 export 'package:calory_tracker/pages/information_pages/search_Product_page.dart';
-export 'package:calory_tracker/pages/userPreferencePage//user_preference_page.dart';
+export 'package:calory_tracker/pages/user_preference_page/user_preference_page.dart';

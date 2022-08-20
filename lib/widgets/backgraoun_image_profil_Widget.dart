@@ -1,21 +1,25 @@
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
-class BackgrounImageProfil extends StatelessWidget {
-  const BackgrounImageProfil({Key? key}) : super(key: key);
+class BackgroundImageProfile extends StatelessWidget {
+  final double width;
+
+  const BackgroundImageProfile({
+    Key? key,
+    required this.width,
+  }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
     final height = MediaQuery.of(context).size.height;
-    final width = MediaQuery.of(context).size.width;
-    final circleWidth = width * 0.3;
-    const scaleFactor = 0.3;
+    final contentWidth = width;
+    final circleWidth = contentWidth * 0.3;
+    const scaleFactor = 0.2;
     final heightFactor = (height * scaleFactor);
     return SizedBox(
-      height: heightFactor + (circleWidth / 2),
+      height: heightFactor + (circleWidth / 1.7),
       child: Stack(
         children: [
-          Container(
+          SizedBox(
             width: double.infinity,
             child: Image.asset(
               'assets/backgrown.jpg',

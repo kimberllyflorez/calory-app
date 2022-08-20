@@ -1,3 +1,4 @@
+import 'package:calory_tracker/pages/user_preference_page/user_preference_page.dart';
 import 'package:calory_tracker/widgets/ExpandableWidget/list_foods_widget.dart';
 import 'package:flutter/material.dart';
 import '../widgets/percent_indicator_widget.dart';
@@ -7,19 +8,29 @@ class CalculatorFoodPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final drawerWidth = MediaQuery.of(context).size.width * .8;
     return Scaffold(
+      appBar: AppBar(
+        backgroundColor: const Color(0xFF4ECDC4),
+        elevation: 0,
+      ),
+      drawer: Drawer(
+        width: drawerWidth,
+        child: UserPreferencePage(
+          width: drawerWidth,
+        ),
+      ),
       body: SingleChildScrollView(
         child: Column(
           children: [
             const CustomAppBar(),
             _FoodHistory(),
-            ExpandableWidget(),
+            const ExpandableWidget(),
           ],
         ),
       ),
     );
   }
-
 }
 
 class CustomAppBar extends StatelessWidget {
@@ -29,15 +40,15 @@ class CustomAppBar extends StatelessWidget {
   Widget build(BuildContext context) {
     return Container(
       margin: const EdgeInsets.only(bottom: 15),
-      height: MediaQuery.of(context).size.height * 0.4,
+      height: MediaQuery.of(context).size.height * 0.25,
       width: double.infinity,
       decoration: const BoxDecoration(
         gradient: LinearGradient(
-          begin: Alignment.center,
-          end: Alignment.bottomLeft,
+          begin: Alignment.topCenter,
+          end: Alignment.bottomCenter,
           colors: [
-            Colors.green,
-            Colors.yellow,
+            Color(0xFF4ECDC4),
+            Color(0xFF556270),
           ],
         ),
         borderRadius: BorderRadius.only(

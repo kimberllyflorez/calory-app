@@ -10,18 +10,6 @@ class WidgetCustomeAppBar extends StatelessWidget {
   Widget build(BuildContext context) {
     return Column(
       children: [
-        Container(
-          alignment: Alignment.centerRight,
-          margin: const EdgeInsets.only(top: 30, right: 30, bottom: 20),
-          child: IconButton(
-            onPressed: () => Navigator.pushNamed(context, 'editProfil'),
-            icon: const Icon(
-              Icons.three_p,
-              color: Colors.black45,
-              size: 30,
-            ),
-          ),
-        ),
         const PercentIndicatorCircles(),
         FutureBuilder(
           future: PreferenceUtils.getDouble(UserConstants.userCalories),
