@@ -1,6 +1,7 @@
 import 'package:calory_tracker/model/model_product.dart';
 import 'package:calory_tracker/model/model_search.dart';
 import 'package:calory_tracker/providers/food_provider.dart';
+import 'package:calory_tracker/theme/app_theme.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:flutter_phosphor_icons/flutter_phosphor_icons.dart';
@@ -129,42 +130,50 @@ class SelectProduct extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      child: Row(
-        children: [
-          Container(
-            margin: const EdgeInsets.all(5),
-            child: Container(
-              width: MediaQuery.of(context).size.width * 0.2,
-              height: MediaQuery.of(context).size.width * 0.2,
-              child: FadeInImage(
-                placeholder: AssetImage('assets/loading.gif'),
-                image: productImageValidate(),
-                fit: BoxFit.fill,
-              ),
+    return  Row(
+      children: [
+        Container(
+          margin: const EdgeInsets.all(5),
+          child: Container(
+            width: MediaQuery.of(context).size.width * 0.2,
+            height: MediaQuery.of(context).size.width * 0.2,
+            child: FadeInImage(
+              placeholder: AssetImage('assets/loading.gif'),
+              image: productImageValidate(),
+              fit: BoxFit.fill,
             ),
           ),
-          Expanded(child: Text(product.productName ?? '')),
-          IconButton(
-            onPressed: () {
-              final provider = Provider.of<ProductsProvider>(context, listen: false);
-              provider.addProduct(product, index);
-              Navigator.pop(context);
-            },
-            icon: const Icon(
-              PhosphorIcons.heart_fill,
-              color: Colors.green,
-              size: 30,
-            ),
-          )
+        ),
+        Expanded(child: Text(product.productName ?? '')),
+        Column(
+        children: [
+          Row(
+            children: [
+              Text(product.nutriments?.carbohydrates100G.toString() ?? '(:'),
+              const SizedBox(width: 5),
+              Text(product.nutriments?.fat100G.toString() ?? ':('),
+              const SizedBox(width: 5),
+              Text(product.nutriments?.proteins100G.toString() ?? ':('),
+            ],
+          ),
         ],
-      ),
+        ),
+        IconButton(
+          onPressed: () {
+            final provider = Provider.of<ProductsProvider>(context, listen: false);
+            provider.addProduct(product, index);
+            Navigator.pop(context);
+          },
+          icon: const Icon(
+            PhosphorIcons.heart_fill,
+            color: AppTheme.primary,
+            size: 30,
+          ),
+        )
+      ],
     );
   }
 
-  //_onSave(BuildContext context, int index, Product model) {
-  //     context.read<ProductsProvider>().addProduct(index , model);
-  //   }
 
   ImageProvider<Object> productImageValidate() {
     final imageUrl = product.imageUrl ?? '';
@@ -174,3 +183,5 @@ class SelectProduct extends StatelessWidget {
     return AssetImage('assets/ic_dinner.png');
   }
 }
+
+

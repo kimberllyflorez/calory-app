@@ -51,7 +51,7 @@ class SelectProductToList extends StatelessWidget {
       child: Row(
         children: [
           Container(
-            margin: EdgeInsets.all(5),
+            margin: const EdgeInsets.all(5),
             decoration: BoxDecoration(
               borderRadius: BorderRadius.circular(20),
             ),
@@ -66,11 +66,11 @@ class SelectProductToList extends StatelessWidget {
           Expanded(child: Text(product.productName ?? '')),
           Row(
             children: [
-              Text(product.nutriments?.carbohydratesValue.toString() ?? ':('),
-              SizedBox(width: 5),
-              Text(product.nutriments?.fatServing.toString() ?? ':('),
-              SizedBox(width: 5),
-              Text(product.nutriments?.fatServing.toString() ?? ':('),
+              Text(product.nutriments?.proteins100G.toString() ?? ':('),
+              const SizedBox(width: 5),
+              Text(product.nutriments?.carbohydrates100G.toString() ?? '(:'),
+              const SizedBox(width: 5),
+              Text(product.nutriments?.fat100G.toString() ?? ':('),
             ],
           ),
           IconButton(
@@ -79,9 +79,9 @@ class SelectProductToList extends StatelessWidget {
               provider.removeProduct(product, index);
               //Navigator.pop(context);
             },
-            icon: const Icon(
+            icon: const  Icon(
               PhosphorIcons.minus_circle,
-              color: Colors.green,
+             //color:,
               size: 30,
             ),
           )

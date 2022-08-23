@@ -63,6 +63,7 @@ class _GenderPageState extends State<ActivityLabelPage> {
     await PreferenceUtils.setInt(
       UserConstants.levelActivity,
       value,
+
     );
     setState(() {
       levelActivity = value;
@@ -70,6 +71,7 @@ class _GenderPageState extends State<ActivityLabelPage> {
   }
 
   _onTap() {
+    print(levelActivity);
     Navigator.pushNamed(context, 'goalPage');
   }
 }

@@ -28,7 +28,7 @@ class _GoalPageState extends State<GoalPage> {
         mainAxisAlignment: MainAxisAlignment.center,
         crossAxisAlignment: CrossAxisAlignment.center,
         children: [
-          Text('Do you want to lose, keep or gain weight?'),
+          const Text('Do you want to lose, keep or gain weight?'),
           Container(
             padding: EdgeInsets.all(5),
             child: Row(
@@ -39,7 +39,7 @@ class _GoalPageState extends State<GoalPage> {
                     select: goalWeight == 0,
                     onPressed: ()=> _onPressed(0),
                 ),
-                SizedBox(
+                const SizedBox(
                     width: 5
                 ),
                 ButtonSelect(
@@ -48,7 +48,7 @@ class _GoalPageState extends State<GoalPage> {
                   onPressed: ()=> _onPressed(1),
 
                 ),
-                SizedBox(width: 5),
+                const SizedBox(width: 5),
                 ButtonSelect(
                     nameButton: 'Gain',
                   select: goalWeight == 2,
@@ -67,13 +67,15 @@ class _GoalPageState extends State<GoalPage> {
   _onPressed(int value) async {
     await PreferenceUtils.setInt(
       UserConstants.gainWeight,
-      value
+      value,
     );
     setState(() {
       goalWeight = value;
     });
+    print('find$goalWeight');
   }
   _onTap(){
+
     Navigator.pushNamed(context, 'nutrientGoal');
 
   }

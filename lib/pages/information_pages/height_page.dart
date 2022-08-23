@@ -1,6 +1,7 @@
 import 'package:calory_tracker/Widgets/button_next_widget.dart';
 import 'package:calory_tracker/constants/user_constants.dart';
 import 'package:calory_tracker/helpers/preference.dart';
+import 'package:calory_tracker/theme/app_theme.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 
@@ -28,7 +29,7 @@ class _HeightPageState extends State<HeightPage> {
         mainAxisAlignment: MainAxisAlignment.center,
         crossAxisAlignment: CrossAxisAlignment.center,
         children: [
-          Text('what is your Height?'),
+          const Text('What is your Height?'),
           Padding(
             padding: EdgeInsets.symmetric(horizontal: width * 0.3),
             child: Row(
@@ -39,7 +40,7 @@ class _HeightPageState extends State<HeightPage> {
                     textAlign: TextAlign.center,
                     autofocus: false,
                     controller: heightController,
-                    style: TextStyle(color: Colors.green, fontWeight: FontWeight.w600, fontSize: 60),
+                    style: const TextStyle(color: AppTheme.primary, fontWeight: FontWeight.w600, fontSize: 60),
                     //style: TextStyle(color: Colors.green, fontWeight: FontWeight.w300),,
                     decoration: const InputDecoration(
                       border: InputBorder.none,
@@ -51,7 +52,7 @@ class _HeightPageState extends State<HeightPage> {
                     onChanged:(value)=> _onPressed(UserConstants.height, value),
                   ),
                 ),
-                Text('cm')
+                const Text('Cm')
               ],
             ),
           ),
@@ -67,11 +68,11 @@ class _HeightPageState extends State<HeightPage> {
   }
 
  _onTap() {
-   final age = int.parse(heightController.text);
-
-   if (age <= 0) {
+   final height = int.parse(heightController.text);
+    print(height);
+   if (height <= 0) {
      ScaffoldMessenger.of(context).showSnackBar(SnackBar(
-       content: Container( child:  Text("heihht is not 0 ")),
+       content: Container( child:  Text("height is not 0 ")),
      ));
      return;
    } else {

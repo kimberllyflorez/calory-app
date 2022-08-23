@@ -1,10 +1,10 @@
 import 'package:calory_tracker/pages/user_preference_page/user_preference_page.dart';
-import 'package:calory_tracker/widgets/ExpandableWidget/list_foods_widget.dart';
+import 'package:calory_tracker/widgets/ExpandableWidget/list_meals_widget.dart';
 import 'package:flutter/material.dart';
 import '../widgets/percent_indicator_widget.dart';
 
-class CalculatorFoodPage extends StatelessWidget {
-  const CalculatorFoodPage({Key? key}) : super(key: key);
+class HomePage extends StatelessWidget {
+  const HomePage({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -24,8 +24,8 @@ class CalculatorFoodPage extends StatelessWidget {
         child: Column(
           children: [
             const CustomAppBar(),
-            _FoodHistory(),
-            const ExpandableWidget(),
+             _FoodHistory(),
+            const ListMealswidget(),
           ],
         ),
       ),
@@ -56,7 +56,7 @@ class CustomAppBar extends StatelessWidget {
           bottomRight: Radius.circular(50),
         ),
       ),
-      child: const WidgetCustomeAppBar(),
+      child: const WidgetCustomerAppBar(),
     );
   }
 }

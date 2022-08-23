@@ -1,4 +1,5 @@
 import 'package:calory_tracker/pages/information_pages/search_Product_page.dart';
+import 'package:calory_tracker/theme/app_theme.dart';
 import 'package:flutter/material.dart';
 
 class ExpandableContainerWidget extends StatelessWidget {
@@ -25,9 +26,7 @@ class ExpandableContainerWidget extends StatelessWidget {
       curve: Curves.easeInOut,
       width: screenWidth * 0.9,
       height: expanded ? expandedHeight : collapsedHeight,
-      child: _BodyExpanded(
-        index: index,
-      ),
+      child:  _BodyExpanded(index: index,),
     );
   }
 }
@@ -49,7 +48,7 @@ class _BodyExpanded extends StatelessWidget {
       decoration: BoxDecoration(
         borderRadius: BorderRadius.circular(30),
         color: Colors.white,
-        border: Border.all(width: 3.0, color: Colors.green),
+        border: Border.all(width: 3.0, color: AppTheme.primary),
       ),
       child: Row(
         mainAxisAlignment: MainAxisAlignment.spaceEvenly,
@@ -63,12 +62,12 @@ class _BodyExpanded extends StatelessWidget {
                     index: index,
                   ),
                 )),
-            child: const Text(
+            child:  const Text(
               "+",
               textAlign: TextAlign.center,
               style: TextStyle(
                 fontWeight: FontWeight.bold,
-                color: Colors.green,
+                color: AppTheme.primary,
                 fontSize: 20,
               ),
             ),
@@ -78,7 +77,7 @@ class _BodyExpanded extends StatelessWidget {
             textAlign: TextAlign.center,
             style: TextStyle(
               fontWeight: FontWeight.bold,
-              color: Colors.green,
+              color: AppTheme.primary,
               fontSize: 20,
             ),
           ),

@@ -1,6 +1,7 @@
 import 'package:calory_tracker/Widgets/button_next_widget.dart';
 import 'package:calory_tracker/constants/user_constants.dart';
 import 'package:calory_tracker/helpers/preference.dart';
+import 'package:calory_tracker/theme/app_theme.dart';
 import 'package:flutter/material.dart';
 
 class weightPage extends StatefulWidget {
@@ -40,13 +41,13 @@ class _weightPageState extends State<weightPage> {
                     autofocus: false,
                     controller: weightController,
                     style: const TextStyle(
-                        color: Colors.green, fontWeight: FontWeight.w600, fontSize: 60),
+                        color: AppTheme.primary, fontWeight: FontWeight.w600, fontSize: 60),
                     decoration: const InputDecoration(
                       border: InputBorder.none,
                     ),
                   ),
                 ),
-                Text('Kg')
+                const Text('Kg')
               ],
             ),
           ),
@@ -62,7 +63,7 @@ class _weightPageState extends State<weightPage> {
 
     if (weight <= 0) {
       ScaffoldMessenger.of(context).showSnackBar(SnackBar(
-        content: Container(child: Text("Weight is not 0 ")),
+        content: Container(child: const Text("Weight is not 0 ")),
       ));
       return;
     } else {

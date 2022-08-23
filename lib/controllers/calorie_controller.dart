@@ -1,6 +1,6 @@
 class CalorieController {
-  static const double defaultMultiplierWomen = 66.4;
-  static const double defaultMultiplierMen = 655;
+  static const double defaultMultiplierWomen = 655;
+  static const double defaultMultiplierMen = 65.4;
   static const double multiplierWeightWomen = 9.4;
   static const double multiplierWeightMen = 13.75;
   static const double multiplierHeightMen = 5.0;
@@ -14,8 +14,8 @@ class CalorieController {
   final double height;
   final int age;
   final double net;
-
   final int goal;
+
 
   ///Constructor
   CalorieController({
@@ -25,6 +25,7 @@ class CalorieController {
     required this.age,
     required this.net,
     required this.goal,
+
   });
 
   ///CalcCalories by gender
@@ -46,7 +47,7 @@ class CalorieController {
 
   ///Default calorie calculation equation
   double calcGeb(double defaultMult, double weightMul, double heightMul, double ageMult) {
-    return defaultMult + (weightMul * weight) + (heightMul * height) - (ageMult * age);
+    return (defaultMult) + (weightMul * weight) + (heightMul * height) - (ageMult * age);
   }
 
   ///thermal energy of the food
@@ -59,11 +60,13 @@ class CalorieController {
     return eta * net;
   }
 
+
   ///caloricAdjustment
   double adjustCalorieEquation(double get, int adjustValue) {
     if (adjustValue != 0) {
-      return (get * adjustValue) / 100;
-    }
+     final adjustCalories = (get * adjustValue) / 100;
+     return get + adjustCalories;
+  }
     return get;
   }
 

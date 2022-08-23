@@ -37,24 +37,29 @@ class _GenderPageState extends State<GenderPage> {
                   nameButton: 'women',
                   onPressed: () => _onPressedGender(0),
                   select: gender == 0,
-
                 ),
                 const SizedBox(width: 5),
                 ButtonSelect(
                   nameButton: 'man',
-                  onPressed: ()=> _onPressedGender(1),
+                  onPressed: () => _onPressedGender(1),
                   select: gender == 1,
                 ),
               ],
             ),
           ),
-
         ],
       ),
-      floatingActionButton:  ButtonNext(onTap: _onTap),
+      floatingActionButton: ButtonNext(onTap: _onTap),
     );
   }
+
   _onPressedGender(int value) async {
+    //if (gender == null) {
+    //       ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
+    //         content: Text("do you should select double tap in the optin select "),
+    //       ));
+    //       return;
+    //     }
     await PreferenceUtils.setBool(
       UserConstants.genderData,
       gender == 1 ? false : true,
@@ -62,16 +67,31 @@ class _GenderPageState extends State<GenderPage> {
     setState(() {
       gender = value;
     });
+    print(gender);
   }
-  _onTap(){
+
+  _onTap() {
     Navigator.pushNamed(context, 'agePage');
   }
 }
 
-
-
-
-
-
-
-
+//
+//_onChanged(String key, String value) async {
+//     await PreferenceUtils.setString(key, value);
+//   }
+//
+//   _onTap() async {
+//     final carbPercent = int.parse(carbController.text);
+//     final fatPercent = int.parse(fatController.text);
+//     final proteinPercent = int.parse(proteinController.text);
+//     final totalPercent = (carbPercent + fatPercent + proteinPercent);
+//     if (totalPercent != 100) {
+//       ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
+//         content: Text("the total percent must be 100"),
+//       ));
+//       return;
+//     }
+//     await PreferenceUtils.setBool(UserConstants.saveData, true);
+//     await _calcCalories();
+//     Navigator.pushNamed(context, 'calculatorFood');
+//   }

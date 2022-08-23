@@ -13,9 +13,9 @@ class PreferenceUtils {
     final prefs = await SharedPreferences.getInstance();
     return prefs.setDouble(key, value);
   }
-  static Future getDouble(String key) async {
+  static Future<double> getDouble(String key) async {
     final prefs = await SharedPreferences.getInstance();
-    return prefs.getDouble(key);
+    return prefs.getDouble(key) ?? 0.0;
   }
   static Future setString(String key, String value) async {
     final prefs = await SharedPreferences.getInstance();

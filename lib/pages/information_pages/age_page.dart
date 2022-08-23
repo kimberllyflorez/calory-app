@@ -1,6 +1,7 @@
 import 'package:calory_tracker/Widgets/button_next_widget.dart';
 import 'package:calory_tracker/constants/user_constants.dart';
 import 'package:calory_tracker/helpers/preference.dart';
+import 'package:calory_tracker/theme/app_theme.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 
@@ -18,7 +19,7 @@ class _AgePageState extends State<AgePage> {
 
   @override
   void initState() {
-    ageController = TextEditingController(text: '10');
+    ageController = TextEditingController(text: '1000');
     super.initState();
   }
 
@@ -44,7 +45,7 @@ class _AgePageState extends State<AgePage> {
                     controller: ageController,
                     onChanged: (value) => _onChange(UserConstants.age, value),
                     style: const TextStyle(
-                        color: Colors.green, fontWeight: FontWeight.w600, fontSize: 60),
+                        color: AppTheme.primary, fontWeight: FontWeight.w600, fontSize: 60),
                     decoration: const InputDecoration(
                       border: InputBorder.none,
                     ),
@@ -53,7 +54,7 @@ class _AgePageState extends State<AgePage> {
                     ],
                   ),
                 ),
-                Text('years')
+                Text('Years')
               ],
             ),
           ),
@@ -64,15 +65,17 @@ class _AgePageState extends State<AgePage> {
   }
 
   _onChange(String key, String value) async {
+
     await PreferenceUtils.setString(key, value);
   }
 
   _onTap() {
     final age = int.parse(ageController.text);
+    print(age);
 
-    if (age <= 1) {
+    if (age < 2) {
       ScaffoldMessenger.of(context).showSnackBar(SnackBar(
-        content: Container( child:  Text("Sending Message")),
+        content: Container( child:  Text("age not allowed ")),
       ));
       return;
     } else {

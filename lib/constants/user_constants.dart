@@ -19,7 +19,7 @@ class UserConstants {
   };
 
   static const  Map<int, int> goalWeights = {
-    0: -30,
+    0: -15,
     1: 0,
     2: 10,
   };

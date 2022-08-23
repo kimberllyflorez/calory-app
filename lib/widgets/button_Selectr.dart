@@ -1,3 +1,4 @@
+import 'package:calory_tracker/theme/app_theme.dart';
 import 'package:flutter/material.dart';
 
 class ButtonSelect extends StatelessWidget {
@@ -15,7 +16,7 @@ class ButtonSelect extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialButton(
-      disabledColor: Colors.green,
+      disabledColor: AppTheme.primary,
       shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(15)),
       child: Text(
         nameButton,
@@ -25,7 +26,7 @@ class ButtonSelect extends StatelessWidget {
         ),
       ),
       splashColor: Colors.black12,
-      color: select ? Colors.green : Colors.white10,
+      color: select ? AppTheme.primary : Colors.white10,
       onPressed: _onPressed,
     );
   }

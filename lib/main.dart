@@ -52,7 +52,7 @@ class CaloryApp extends StatelessWidget {
             );
           }
           final result = snapshot.data ?? false;
-          return result ? const CalculatorFoodPage() : const HelloPage();
+          return result ? const HomePage() : const HelloPage();
         },
       ),
       routes: Routes.routes,

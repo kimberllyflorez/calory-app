@@ -2,6 +2,7 @@ import 'package:calory_tracker/Widgets/button_next_widget.dart';
 import 'package:calory_tracker/constants/user_constants.dart';
 import 'package:calory_tracker/controllers/calorie_controller.dart';
 import 'package:calory_tracker/helpers/preference.dart';
+import 'package:calory_tracker/theme/app_theme.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
@@ -42,7 +43,7 @@ class _MacronutrientPercentState extends State<MacronutrientPercent> {
             child: Column(
               children: [
                 NutrientsGoal(
-                  nameNutrint: '% carbs',
+                  nameNutrint: '% carbs ',
                   nutrientController: carbController,
                   onChanged: (value) => _onChanged(UserConstants.carbPercent, value),
                 ),
@@ -52,7 +53,7 @@ class _MacronutrientPercentState extends State<MacronutrientPercent> {
                   onChanged: (value) => _onChanged(UserConstants.proteinPercent, value),
                 ),
                 NutrientsGoal(
-                  nameNutrint: '% fats  ',
+                  nameNutrint: '% fats     ',
                   nutrientController: fatController,
                   onChanged: (value) => _onChanged(UserConstants.fatPercent, value),
                 ),
@@ -67,6 +68,7 @@ class _MacronutrientPercentState extends State<MacronutrientPercent> {
 
   _onChanged(String key, String value) async {
     await PreferenceUtils.setString(key, value);
+
   }
 
   _onTap() async {
@@ -82,7 +84,9 @@ class _MacronutrientPercentState extends State<MacronutrientPercent> {
     }
     await PreferenceUtils.setBool(UserConstants.saveData, true);
     await _calcCalories();
+
     Navigator.pushNamed(context, 'calculatorFood');
+
   }
 
   Future<void> _calcCalories() async {
@@ -98,6 +102,9 @@ class _MacronutrientPercentState extends State<MacronutrientPercent> {
     double activityLevel = UserConstants.activityLevels[activityNet] ?? 0.0;
     int goal = UserConstants.goalWeights[goalWeight] ?? 0;
 
+
+
+
     final calorieController = CalorieController(
       weight: weight,
       isWomen: gender ?? false,
@@ -105,6 +112,7 @@ class _MacronutrientPercentState extends State<MacronutrientPercent> {
       age: age,
       net: activityLevel,
       goal: goal,
+
     );
 
     final calories = calorieController.calcCalorie();
@@ -132,7 +140,7 @@ class NutrientsGoal extends StatelessWidget {
             autofocus: false,
             controller: nutrientController,
             style: const TextStyle(
-              color: Colors.green,
+              color: AppTheme.primary,
               fontWeight: FontWeight.w600,
               fontSize: 60,
             ),

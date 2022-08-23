@@ -5,7 +5,7 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:flutter_phosphor_icons/flutter_phosphor_icons.dart';
 
-class ExpandableWidget extends StatelessWidget {
+class ListMealswidget extends StatelessWidget {
   final List<String> meal = const [
     'Breakfast',
     'Lunch',
@@ -13,7 +13,7 @@ class ExpandableWidget extends StatelessWidget {
     'Snack',
   ];
 
-  const ExpandableWidget({Key? key}) : super(key: key);
+  const ListMealswidget({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
