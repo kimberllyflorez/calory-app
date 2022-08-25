@@ -12,11 +12,11 @@ class GenderPage extends StatefulWidget {
 }
 
 class _GenderPageState extends State<GenderPage> {
-  late int gender;
+  late int isWomen;
 
   @override
   void initState() {
-    gender = 0;
+    isWomen = 0;
     super.initState();
   }
 
@@ -36,13 +36,13 @@ class _GenderPageState extends State<GenderPage> {
                 ButtonSelect(
                   nameButton: 'women',
                   onPressed: () => _onPressedGender(0),
-                  select: gender == 0,
+                  select: isWomen == 0,
                 ),
                 const SizedBox(width: 5),
                 ButtonSelect(
                   nameButton: 'man',
                   onPressed: () => _onPressedGender(1),
-                  select: gender == 1,
+                  select: isWomen == 1,
                 ),
               ],
             ),
@@ -54,20 +54,14 @@ class _GenderPageState extends State<GenderPage> {
   }
 
   _onPressedGender(int value) async {
-    //if (gender == null) {
-    //       ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
-    //         content: Text("do you should select double tap in the optin select "),
-    //       ));
-    //       return;
-    //     }
     await PreferenceUtils.setBool(
       UserConstants.genderData,
-      gender == 1 ? false : true,
+      isWomen == 1 ? false : true,
     );
     setState(() {
-      gender = value;
+      isWomen = value;
     });
-    print(gender);
+    print(isWomen);
   }
 
   _onTap() {

@@ -52,7 +52,7 @@ class DataProfile extends StatelessWidget {
         return ProfileButtons(
           iconName: buttonsProfilList[index].nameButton,
           iconButton: buttonsProfilList[index].iconButton,
-          route: buttonsProfilList[index].routeNavigator,
+          route: buttonsProfilList[index].routeNavigator  ,
         );
       },
       itemCount: buttonsProfilList.length,
@@ -93,7 +93,7 @@ class ProfileButtons extends StatelessWidget {
             textAlign: TextAlign.center,
           )),
           IconButton(
-            onPressed: () => Navigator.pushNamed(context, route ?? ''),
+            onPressed: () => Navigator.pushNamed(context, route  ?? 'calculatorFood') ,//todo hacer la rutas
             icon: const Icon(
               PhosphorIcons.arrow_bend_up_right,
             ),
@@ -120,21 +120,26 @@ final buttonsProfilList = <ProfileButtonModel>[
   ProfileButtonModel(
     nameButton: 'caloric recalculation',
     iconButton: PhosphorIcons.calculator_fill,
+    routeNavigator: 'calorierecalculation',
   ),
   ProfileButtonModel(
     nameButton: 'About me ',
     iconButton: PhosphorIcons.user_circle_gear_fill,
+    routeNavigator:  'calculatorFood',
   ),
   ProfileButtonModel(
     nameButton: 'my calendar',
     iconButton: PhosphorIcons.calendar_check_fill,
+    routeNavigator: 'calculatorFood',
   ),
   ProfileButtonModel(
     nameButton: 'supplements',
     iconButton: PhosphorIcons.polygon,
+    routeNavigator: 'calculatorFood',
   ),
   ProfileButtonModel(
     nameButton: 'Training',
     iconButton: PhosphorIcons.barbell_bold,
+    routeNavigator: 'calculatorFood',
   ),
 ];

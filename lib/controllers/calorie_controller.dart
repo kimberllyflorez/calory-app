@@ -32,6 +32,8 @@ class CalorieController {
   double calcCalorie() {
     double gebValue = 0.0;
 
+
+
     if (isWomen) {
       gebValue = calcGeb(
           defaultMultiplierWomen, multiplierWeightWomen, multiplierHeightWomen, multiplierAgeWomen);
@@ -42,6 +44,9 @@ class CalorieController {
     final double etaValue = etaEquation(gebValue);
     final double getValue = getEquation(etaValue);
     final double adjustCalories = adjustCalorieEquation(getValue, goal);
+    final double calorieFats = fatCalorieEquation(adjustCalories);
+    final double calorieProtein = proteinCalorieEquation(weight);
+    final double caloriesCarbs = carbsCalorieEquation(calorieFats,calorieProtein, adjustCalories );
     return adjustCalories;
   }
 
@@ -69,20 +74,23 @@ class CalorieController {
   }
     return get;
   }
+/// ecuation calulate to grams od fat - datun 30%
+  double fatCalorieEquation(double adjustCalories) {
 
-  double fatCalorieEquation(double adjustCalories, int fatPercent) {
-    final fatCalories = (adjustCalories * fatPercent) / 100;
-    return calcGrams(9, fatCalories);
+      final fatCalories = ((adjustCalories * 30) / 100);
+      final calcGramsFat =  fatCalories * 9;
+      return calcGramsFat;
   }
-
-  double proteinCalorieEquation(double adjustCalories, int proteinPercent) {
-    final proteinCalories = (adjustCalories * proteinPercent) / 100;
-    return calcGrams(4, proteinCalories);
+///ecuation calulate to grams od protein - mult 2
+  double proteinCalorieEquation(double weight) {
+    final proteinCalories = (weight * 2);
+    final GramsProtein = proteinCalories * 4;
+    return GramsProtein;
   }
-
-  double carbsCalorieEquation(double adjustCalories, int carbsPercent) {
-    final carbsCalories = (adjustCalories * carbsPercent) / 100;
-    return calcGrams(4, carbsCalories);
+/// ecuation calulate to grams od carbs
+  double carbsCalorieEquation(double adjustCalories, double gramsCarbs, double gramsProtein ) {
+    final carbsCalories = adjustCalories - ( gramsCarbs + gramsProtein);
+    return carbsCalories;
   }
 
   double calcGrams(int factor, double calories) {

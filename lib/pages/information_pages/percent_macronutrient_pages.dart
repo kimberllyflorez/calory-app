@@ -123,22 +123,22 @@ class _MacronutrientPercentState extends State<MacronutrientPercent> {
 class NutrientsGoal extends StatelessWidget {
   final String nameNutrint;
   final Function(String)? onChanged;
-  final TextEditingController? nutrientController;
+          final TextEditingController? nutrientController;
 
-  const NutrientsGoal(
-      {Key? key, required this.nameNutrint, this.onChanged, this.nutrientController})
-      : super(key: key);
+          const NutrientsGoal(
+              {Key? key, required this.nameNutrint, this.onChanged, this.nutrientController})
+              : super(key: key);
 
-  @override
-  Widget build(BuildContext context) {
-    return Row(
-      crossAxisAlignment: CrossAxisAlignment.end,
-      children: [
-        Flexible(
-          child: TextFormField(
-            textAlign: TextAlign.center,
-            autofocus: false,
-            controller: nutrientController,
+          @override
+          Widget build(BuildContext context) {
+            return Row(
+              crossAxisAlignment: CrossAxisAlignment.end,
+              children: [
+                Flexible(
+                  child: TextFormField(
+                    textAlign: TextAlign.center,
+                    autofocus: false,
+                    controller: nutrientController,
             style: const TextStyle(
               color: AppTheme.primary,
               fontWeight: FontWeight.w600,

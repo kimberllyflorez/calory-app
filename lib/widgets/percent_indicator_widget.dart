@@ -106,18 +106,48 @@ class PercentIndicatorCircles extends StatelessWidget {
     final proteins = context.watch<ProductsProvider>().totalSelectProtein;
     final carbs = context.watch<ProductsProvider>().totalSelectCarbs;
     final fats = context.watch<ProductsProvider>().totalSelectFats;
+    double graphicValueProtein = proteins / 100;
+    double graphicValueCarbs = carbs / 100;
+    double graphicValueFats = fats/ 100;
+
+
+    if (graphicValueProtein < 0.0) {
+      graphicValueProtein = 0.0;
+    } else if (graphicValueProtein > 1.0) {
+      graphicValueProtein = 1.0;
+    }
+    final int percentValueProtein = proteins.toInt();
+
+
+    if (graphicValueCarbs < 0.0) {
+      graphicValueCarbs = 0.0;
+    } else if (graphicValueCarbs > 1.0) {
+      graphicValueCarbs = 1.0;
+    }
+    final int percentValueCarbs  = carbs.toInt();
+
+
+    if (graphicValueFats < 0.0) {
+      graphicValueFats = 0.0;
+    } else if (graphicValueFats > 1.0) {
+      graphicValueFats = 1.0;
+    }
+    final int percentValueFat = fats.toInt();
+
+
+
     return Row(
       mainAxisAlignment: MainAxisAlignment.center,
       children: <Widget>[
         CircularPercentIndicator(
           radius: 45.0,
           lineWidth: 4.0,
-          percent: proteins / 100,
+          percent: graphicValueProtein ,
           center: Column(
             mainAxisAlignment: MainAxisAlignment.center,
             mainAxisSize: MainAxisSize.max,
             children: [
-              Text("$proteins gr"),
+              Text("$percentValueProtein gr"),
               const Text("Proteins"),
             ],
           ),
@@ -127,12 +157,12 @@ class PercentIndicatorCircles extends StatelessWidget {
         CircularPercentIndicator(
           radius: 45.0,
           lineWidth: 4.0,
-          percent: carbs / 100,
+          percent: graphicValueCarbs ,
           center: Column(
             mainAxisAlignment: MainAxisAlignment.center,
             mainAxisSize: MainAxisSize.max,
             children: [
-              Text("$carbs gr"),
+              Text("$percentValueCarbs gr"),
               const Text("Carbs"),
             ],
           ),
@@ -142,12 +172,12 @@ class PercentIndicatorCircles extends StatelessWidget {
         CircularPercentIndicator(
           radius: 45.0,
           lineWidth: 4.0,
-          percent: fats / 100,
+          percent: graphicValueFats,
           center: Column(
             mainAxisAlignment: MainAxisAlignment.center,
             mainAxisSize: MainAxisSize.max,
             children: [
-              Text("$fats gr"),
+              Text("$percentValueFat gr"),
               const Text("Fats"),
             ],
           ),

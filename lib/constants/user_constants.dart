@@ -11,6 +11,7 @@ class UserConstants {
   static const saveData = 'save_data';
   static const userCalories = 'user_calories';
   static const themeSelect = 'theme_select';
+  static const selectedNumber = 'selectedNumber';
 
   static const Map<int, double> activityLevels = {
     0: 1.3,

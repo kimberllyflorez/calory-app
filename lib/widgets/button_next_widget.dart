@@ -4,8 +4,10 @@ import 'package:flutter/material.dart';
 class ButtonNext extends StatelessWidget {
   final void Function()? onTap;
 
+
   const ButtonNext({
-    Key? key,
+  Key? key,
+
     this.onTap,
   }) : super(key: key);
 
@@ -22,7 +24,7 @@ class ButtonNext extends StatelessWidget {
 
         width: 80,
         height: 50,
-        child: const Center(
+        child:  const Center(
           child: Text('Next'),
         ),
       ),

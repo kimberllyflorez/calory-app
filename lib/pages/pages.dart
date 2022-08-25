@@ -9,3 +9,4 @@ export 'package:calory_tracker/pages/information_pages/goal_weight_page.dart';
 export 'package:calory_tracker/pages/home_page.dart';
 export 'package:calory_tracker/pages/information_pages/search_Product_page.dart';
 export 'package:calory_tracker/pages/user_preference_page/user_preference_page.dart';
+export 'package:calory_tracker/pages/user_preference_page/calorie_recalcularion_page.dart';

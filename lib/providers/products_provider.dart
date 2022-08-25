@@ -29,6 +29,7 @@ class ProductsProvider extends ChangeNotifier {
     if (index == 1) lunchProduct.remove(product);
     if (index == 2) dinnerProduct.remove(product);
     if (index == 3) snackProduct.remove(product);
+    _calcTotalCalories();
     notifyListeners();
   }
 

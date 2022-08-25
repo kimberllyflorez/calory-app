@@ -11,6 +11,7 @@ class Routes {
     'activityLabelPage': (_) => const ActivityLabelPage(),
     'nutrientGoal': (_) => const MacronutrientPercent(),
     'goalPage': (_) => const GoalPage(),
-    'calculatorFood': (_) => const HomePage(),
+    'calculatorFood': (_) =>  HomePage(),
+    'calorierecalculation': (_) => CalorieRecalculationPage(),
   };
 }

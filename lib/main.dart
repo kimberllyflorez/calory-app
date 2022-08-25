@@ -1,6 +1,7 @@
 import 'package:calory_tracker/constants/user_constants.dart';
 import 'package:calory_tracker/helpers/preference.dart';
 import 'package:calory_tracker/providers/theme_modo_provider.dart';
+import 'package:calory_tracker/providers/user_info_provider.dart';
 import 'package:calory_tracker/routes/routes.dart';
 import 'package:calory_tracker/theme/app_theme.dart';
 import 'package:flutter/material.dart';
@@ -23,14 +24,15 @@ class AppState extends StatelessWidget {
         ChangeNotifierProvider(create: (_) => FoodProvider()),
         ChangeNotifierProvider(create: (_) => ProductsProvider()),
         ChangeNotifierProvider(create: (_)=>ThemeSelectProvider()),
+        ChangeNotifierProvider(create: (_)=> UserDataProvider()),
       ],
-      child: const CaloryApp(),
+      child: const CalorieApp(),
     );
   }
 }
 
-class CaloryApp extends StatelessWidget {
-  const CaloryApp({Key? key}) : super(key: key);
+class CalorieApp extends StatelessWidget {
+  const CalorieApp({Key? key}) : super(key: key);
 
   // This widget is the root of your application.
   @override
@@ -52,7 +54,11 @@ class CaloryApp extends StatelessWidget {
             );
           }
           final result = snapshot.data ?? false;
-          return result ? const HomePage() : const HelloPage();
+          if(result){
+            context.read<UserDataProvider>().getData();
+            return const HomePage();
+          }//result ? const HomePage() :
+          return  const HelloPage();
         },
       ),
       routes: Routes.routes,

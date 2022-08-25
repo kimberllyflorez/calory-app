@@ -6,11 +6,13 @@ class ButtonSelect extends StatelessWidget {
   final Function()? onPressed;
   final bool select;
 
+
   const ButtonSelect({
     Key? key,
     required this.nameButton,
     this.select = false,
     this.onPressed,
+
   }) : super(key: key);
 
   @override
@@ -26,7 +28,7 @@ class ButtonSelect extends StatelessWidget {
         ),
       ),
       splashColor: Colors.black12,
-      color: select ? AppTheme.primary : Colors.white10,
+      color:  select  ?  AppTheme.primary : Colors.white10,
       onPressed: _onPressed,
     );
   }

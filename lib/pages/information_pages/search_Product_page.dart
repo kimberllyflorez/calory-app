@@ -1,11 +1,9 @@
-import 'package:calory_tracker/model/model_product.dart';
 import 'package:calory_tracker/model/model_search.dart';
 import 'package:calory_tracker/providers/food_provider.dart';
 import 'package:calory_tracker/theme/app_theme.dart';
+import 'package:calory_tracker/widgets/ExpandableWidget/selected_product_widget.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import 'package:flutter_phosphor_icons/flutter_phosphor_icons.dart';
-import '../../providers/products_provider.dart';
 
 class SearchFood extends StatelessWidget {
   final int index;
@@ -22,6 +20,7 @@ class SearchFood extends StatelessWidget {
       appBar: AppBar(
         title: const Text(
           'Select Product',
+          style: TextStyle(color: AppTheme.primary),
           textAlign: TextAlign.start,
         ),
         centerTitle: false,
@@ -35,6 +34,7 @@ class SearchFood extends StatelessWidget {
             child: Padding(
               padding: const EdgeInsets.all(20),
               child: TextFormField(
+                autofocus: true,
                 onChanged: (String query) {
                   Provider.of<FoodProvider>(context, listen: false).fetchFoodByQuery(query);
                 },
@@ -89,7 +89,7 @@ class ProductsList extends StatelessWidget {
     }
     if (foodList.products.isEmpty) {
       return const Center(
-        child: Text('No hay informacion relacionada'),
+        child: Text('data not found'),
       );
     }
     return Padding(
@@ -117,71 +117,3 @@ class ProductsList extends StatelessWidget {
     );
   }
 }
-
-class SelectProduct extends StatelessWidget {
-  final Product product;
-  final int index;
-
-  const SelectProduct({
-    Key? key,
-    required this.product,
-    required this.index,
-  }) : super(key: key);
-
-  @override
-  Widget build(BuildContext context) {
-    return  Row(
-      children: [
-        Container(
-          margin: const EdgeInsets.all(5),
-          child: Container(
-            width: MediaQuery.of(context).size.width * 0.2,
-            height: MediaQuery.of(context).size.width * 0.2,
-            child: FadeInImage(
-              placeholder: AssetImage('assets/loading.gif'),
-              image: productImageValidate(),
-              fit: BoxFit.fill,
-            ),
-          ),
-        ),
-        Expanded(child: Text(product.productName ?? '')),
-        Column(
-        children: [
-          Row(
-            children: [
-              Text(product.nutriments?.carbohydrates100G.toString() ?? '(:'),
-              const SizedBox(width: 5),
-              Text(product.nutriments?.fat100G.toString() ?? ':('),
-              const SizedBox(width: 5),
-              Text(product.nutriments?.proteins100G.toString() ?? ':('),
-            ],
-          ),
-        ],
-        ),
-        IconButton(
-          onPressed: () {
-            final provider = Provider.of<ProductsProvider>(context, listen: false);
-            provider.addProduct(product, index);
-            Navigator.pop(context);
-          },
-          icon: const Icon(
-            PhosphorIcons.heart_fill,
-            color: AppTheme.primary,
-            size: 30,
-          ),
-        )
-      ],
-    );
-  }
-
-
-  ImageProvider<Object> productImageValidate() {
-    final imageUrl = product.imageUrl ?? '';
-    if (imageUrl.isNotEmpty) {
-      return NetworkImage(imageUrl);
-    }
-    return AssetImage('assets/ic_dinner.png');
-  }
-}
-
-

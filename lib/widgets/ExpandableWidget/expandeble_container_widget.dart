@@ -9,6 +9,7 @@ class ExpandableContainerWidget extends StatelessWidget {
   final Widget? child;
   final int index;
 
+
   const ExpandableContainerWidget({
     Key? key,
     this.child,
@@ -16,6 +17,7 @@ class ExpandableContainerWidget extends StatelessWidget {
     this.expandedHeight = 70.0,
     this.expanded = true,
     required this.index,
+
   }) : super(key: key);
 
   @override
@@ -26,7 +28,7 @@ class ExpandableContainerWidget extends StatelessWidget {
       curve: Curves.easeInOut,
       width: screenWidth * 0.9,
       height: expanded ? expandedHeight : collapsedHeight,
-      child:  _BodyExpanded(index: index,),
+      child:  _BodyExpanded(index: index),
     );
   }
 }
@@ -34,9 +36,11 @@ class ExpandableContainerWidget extends StatelessWidget {
 class _BodyExpanded extends StatelessWidget {
   final int index;
 
+
   const _BodyExpanded({
     Key? key,
     required this.index,
+
   }) : super(key: key);
 
   @override
@@ -60,6 +64,7 @@ class _BodyExpanded extends StatelessWidget {
                 MaterialPageRoute(
                   builder: (route) => SearchFood(
                     index: index,
+
                   ),
                 )),
             child:  const Text(

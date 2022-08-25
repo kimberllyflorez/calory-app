@@ -19,7 +19,7 @@ class _AgePageState extends State<AgePage> {
 
   @override
   void initState() {
-    ageController = TextEditingController(text: '1000');
+    ageController = TextEditingController(text: '00');
     super.initState();
   }
 

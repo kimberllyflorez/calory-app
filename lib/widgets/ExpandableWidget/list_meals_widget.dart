@@ -1,19 +1,27 @@
-import 'package:calory_tracker/providers/products_provider.dart';
-import 'package:calory_tracker/theme/app_theme.dart';
 import 'package:calory_tracker/widgets/ExpandableWidget/expandable_ListFoods_Widget.dart';
 import 'package:flutter/material.dart';
-import 'package:provider/provider.dart';
-import 'package:flutter_phosphor_icons/flutter_phosphor_icons.dart';
 
-class ListMealswidget extends StatelessWidget {
-  final List<String> meal = const [
-    'Breakfast',
-    'Lunch',
-    'Dinner',
-    'Snack',
-  ];
+class ListMealsWidget extends StatelessWidget {
+  final meal = <ListFoodsModel>[
+    ListFoodsModel(
+      imageMeal: 'assets/breackfast.jpg',
+      mealName: 'Breakfast',
+    ),
+    ListFoodsModel(
+      imageMeal: 'assets/ic_dinner.png',
+      mealName: 'Lunch',
+    ),
+    ListFoodsModel(
+      imageMeal: 'assets/ic_lunch.png',
+      mealName: 'Dinner',
+    ),
+    ListFoodsModel(
+      imageMeal: 'assets/food.png',
+      mealName: 'Snack',
+    ),
+  ]; //
 
-  const ListMealswidget({Key? key}) : super(key: key);
+  ListMealsWidget({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -23,9 +31,10 @@ class ListMealswidget extends StatelessWidget {
           shrinkWrap: true,
           physics: const NeverScrollableScrollPhysics(),
           itemBuilder: (BuildContext context, int index) {
-            return ExpandableListFoodsWidget(
-              title: meal[index],
-              index: index,
+            return ExpandableListMealsWidget(
+              title: meal[index].mealName,
+              index: index, imageMeals: meal[index].imageMeal,
+              // selectedValue: selectedValue,
             );
           },
           itemCount: meal.length,
@@ -33,4 +42,14 @@ class ListMealswidget extends StatelessWidget {
       ],
     );
   }
+}
+
+class ListFoodsModel {
+  final String mealName;
+  final String imageMeal;
+
+  ListFoodsModel({
+    required this.imageMeal,
+    required this.mealName,
+  });
 }

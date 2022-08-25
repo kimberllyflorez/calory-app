@@ -25,7 +25,7 @@ class HomePage extends StatelessWidget {
           children: [
             const CustomAppBar(),
              _FoodHistory(),
-            const ListMealswidget(),
+             ListMealsWidget(),
           ],
         ),
       ),
