@@ -1,5 +1,6 @@
 import 'package:calory_tracker/Widgets/button_Selectr.dart';
 import 'package:calory_tracker/constants/user_constants.dart';
+import 'package:calory_tracker/controllers/calorie_controller.dart';
 import 'package:calory_tracker/helpers/preference.dart';
 import 'package:calory_tracker/theme/app_theme.dart';
 import 'package:calory_tracker/widgets/widgets.dart';
@@ -45,29 +46,42 @@ class _CalorieRecalculationPageState extends State<CalorieRecalculationPage> {
             const CustomerAppBar(),
             const SizedBox(height: 10),
             ItemForm(
-              iconData: const Icon(PhosphorIcons.baby_fill,
+              iconData: const Icon(
+                PhosphorIcons.baby_fill,
                 color: AppTheme.formColor,
               ),
-              value: 2,
+              valueValidate: 2,
               controller: controllerAge,
-              nameForm: 'introduct your Age',
+              nameForm: 'Enter your Age',
+              onChanged: (value) => _onChangedString(
+                UserConstants.age,
+                value,
+              ),
             ),
             ItemForm(
-              iconData: const Icon(PhosphorIcons.person_fill,
+              iconData: const Icon(
+                PhosphorIcons.person_fill,
                 color: AppTheme.formColor,
               ),
-              value: 3,
+              valueValidate: 3,
               controller: controllerHeight,
-              nameForm: 'introduct your Height',
+              nameForm: 'Enter  your Height',
+              onChanged: (value) => _onChangedString(
+                UserConstants.height,
+                value,
+              ),
             ),
             ItemForm(
-              iconData: const Icon(PhosphorIcons.barbell_fill,
+              iconData: const Icon(
+                PhosphorIcons.barbell_fill,
                 color: AppTheme.formColor,
               ),
-              value: 3,
+              valueValidate: 3,
               controller: controllerWeight,
-              nameForm: 'introduct your weight',
+              nameForm: 'Enter your weight',
+              onChanged: (value) => _onChangedDouble(UserConstants.weight, value),
             ),
+            const SizedBox(height: 4),
             _GenderSelector(
               selected: controllerGender,
               onPressed: _onPressedGender,
@@ -84,32 +98,35 @@ class _CalorieRecalculationPageState extends State<CalorieRecalculationPage> {
           ],
         ),
       ),
-      floatingActionButton: Container(
-        child: const ButtonNext(),
-      ),
+      floatingActionButton: const _ButtonSave(),
     );
+  }
+
+  _onChangedString(String key, String value) async {
+    await PreferenceUtils.setString(key, value);
+    setState(() {
+      value;
+    });
+  }
+
+  _onChangedDouble(String key, String value) async {
+    final double weight = double.tryParse(controllerWeight.text) ?? 0.0;
+    await PreferenceUtils.setDouble(key, weight);
   }
 
   _onPressedGender(int value) async {
-    await PreferenceUtils.setBool(
-      UserConstants.genderData,
-      controllerGender == 1 ? false : true,
-    );
+    final isWomen = value == 0;
+    await PreferenceUtils.setBool(UserConstants.genderData, isWomen);
     setState(() {
       controllerGender = value;
     });
-    await context.read<UserDataProvider>().getData();
   }
 
   _onPressedActivity(int value) async {
-    await PreferenceUtils.setInt(
-      UserConstants.levelActivity,
-      value,
-    );
+    await PreferenceUtils.setInt(UserConstants.levelActivity, value);
     setState(() {
       controllerActivity = value;
     });
-    await context.read<UserDataProvider>().getData();
   }
 }
 
@@ -128,7 +145,7 @@ class _GenderSelector extends StatelessWidget {
     return Column(
       children: [
         Container(
-          margin: const EdgeInsets.only(left: 16),
+          margin: const EdgeInsets.only(left: 12),
           child: Row(
             children: const [
               Icon(
@@ -136,7 +153,7 @@ class _GenderSelector extends StatelessWidget {
                 size: 30,
                 color: AppTheme.formColor,
               ),
-              SizedBox(width: 10),
+              SizedBox(width: 12),
               Text(
                 'Select your gender ',
                 style: TextStyle(fontSize: 12),
@@ -180,7 +197,7 @@ class _ActivitySelector extends StatelessWidget {
     return Column(
       children: [
         Container(
-          margin: const EdgeInsets.only(left: 16),
+          margin: const EdgeInsets.only(left: 12),
           child: Row(
             children: const [
               Icon(
@@ -214,7 +231,7 @@ class _ActivitySelector extends StatelessWidget {
             ButtonSelect(
               nameButton: 'High',
               onPressed: () => onPressed(2),
-              select: selected == 2 ,
+              select: selected == 2,
             ),
           ],
         ),
@@ -224,8 +241,9 @@ class _ActivitySelector extends StatelessWidget {
 }
 
 class ItemForm extends StatelessWidget {
+  final Function(String)? onChanged;
   final TextEditingController? controller;
-  final int? value;
+  final int? valueValidate;
   final String nameForm;
   final Icon iconData;
   final String? initialValue;
@@ -236,7 +254,8 @@ class ItemForm extends StatelessWidget {
     required this.nameForm,
     this.initialValue,
     this.controller,
-    this.value,
+    this.valueValidate,
+    this.onChanged,
   }) : super(key: key);
 
   @override
@@ -246,6 +265,7 @@ class ItemForm extends StatelessWidget {
       alignment: Alignment.center,
       child: TextFormField(
         initialValue: initialValue,
+        onChanged: onChanged,
         autofocus: false,
         controller: controller,
         decoration: InputDecoration(
@@ -254,7 +274,7 @@ class ItemForm extends StatelessWidget {
           labelText: nameForm,
         ),
         inputFormatters: [
-          LengthLimitingTextInputFormatter(value ?? 6),
+          LengthLimitingTextInputFormatter(valueValidate ?? 6),
           FilteringTextInputFormatter.digitsOnly,
         ],
       ),
@@ -287,7 +307,7 @@ class CustomerAppBar extends StatelessWidget {
           left: 10,
           child: IconButton(
             icon: const Icon(
-              PhosphorIcons.arrow_bend_up_left,
+              PhosphorIcons.arrow_bend_up_left_fill,
               size: 45,
               color: Colors.white,
             ),
@@ -297,6 +317,54 @@ class CustomerAppBar extends StatelessWidget {
           ),
         ),
       ],
+    );
+  }
+}
+
+class _ButtonSave extends StatelessWidget {
+  const _ButtonSave({Key? key}) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    return GestureDetector(
+      onTap: () async {
+        final String prefAge = await PreferenceUtils.getString(UserConstants.age);
+        final bool? gender = await PreferenceUtils.getBool(UserConstants.genderData);
+        final String prefHeight = await PreferenceUtils.getString(UserConstants.height);
+        final double weight = await PreferenceUtils.getDouble(UserConstants.weight);
+        final int goalWeight = await PreferenceUtils.getInt(UserConstants.gainWeight);
+        final int activityNet = await PreferenceUtils.getInt(UserConstants.levelActivity);
+
+        var age = int.parse(prefAge);
+        var height = double.parse(prefHeight);
+        double activityLevel = UserConstants.activityLevels[activityNet] ?? 0.0;
+        int goal = UserConstants.goalWeights[goalWeight] ?? 0;
+
+        final calorieController = CalorieController(
+          weight: weight,
+          isWomen: gender ?? false,
+          height: height,
+          age: age,
+          net: activityLevel,
+          goal: goal,
+        );
+
+        final calories = calorieController.calcCalorie();
+        PreferenceUtils.setDouble(UserConstants.userCalories, calories);
+        Navigator.pushNamed(context, 'calculatorFood');
+        Provider.of<UserDataProvider>(context, listen: false).getData();
+      },
+      child: Container(
+        decoration: BoxDecoration(
+          color: AppTheme.formColor,
+          borderRadius: BorderRadius.circular(25),
+        ),
+        width: 80,
+        height: 50,
+        child: const Center(
+          child: Text('Save'),
+        ),
+      ),
     );
   }
 }

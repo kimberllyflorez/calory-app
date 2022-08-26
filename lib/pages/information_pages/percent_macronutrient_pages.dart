@@ -43,17 +43,17 @@ class _MacronutrientPercentState extends State<MacronutrientPercent> {
             child: Column(
               children: [
                 NutrientsGoal(
-                  nameNutrint: '% carbs ',
+                  nameNutrient: '% carbs ',
                   nutrientController: carbController,
                   onChanged: (value) => _onChanged(UserConstants.carbPercent, value),
                 ),
                 NutrientsGoal(
-                  nameNutrint: '% Protein',
+                  nameNutrient: '% Protein',
                   nutrientController: proteinController,
                   onChanged: (value) => _onChanged(UserConstants.proteinPercent, value),
                 ),
                 NutrientsGoal(
-                  nameNutrint: '% fats     ',
+                  nameNutrient: '% fats     ',
                   nutrientController: fatController,
                   onChanged: (value) => _onChanged(UserConstants.fatPercent, value),
                 ),
@@ -68,7 +68,6 @@ class _MacronutrientPercentState extends State<MacronutrientPercent> {
 
   _onChanged(String key, String value) async {
     await PreferenceUtils.setString(key, value);
-
   }
 
   _onTap() async {
@@ -86,7 +85,6 @@ class _MacronutrientPercentState extends State<MacronutrientPercent> {
     await _calcCalories();
 
     Navigator.pushNamed(context, 'calculatorFood');
-
   }
 
   Future<void> _calcCalories() async {
@@ -102,9 +100,6 @@ class _MacronutrientPercentState extends State<MacronutrientPercent> {
     double activityLevel = UserConstants.activityLevels[activityNet] ?? 0.0;
     int goal = UserConstants.goalWeights[goalWeight] ?? 0;
 
-
-
-
     final calorieController = CalorieController(
       weight: weight,
       isWomen: gender ?? false,
@@ -112,7 +107,6 @@ class _MacronutrientPercentState extends State<MacronutrientPercent> {
       age: age,
       net: activityLevel,
       goal: goal,
-
     );
 
     final calories = calorieController.calcCalorie();
@@ -121,24 +115,24 @@ class _MacronutrientPercentState extends State<MacronutrientPercent> {
 }
 
 class NutrientsGoal extends StatelessWidget {
-  final String nameNutrint;
+  final String nameNutrient;
   final Function(String)? onChanged;
-          final TextEditingController? nutrientController;
+  final TextEditingController? nutrientController;
 
-          const NutrientsGoal(
-              {Key? key, required this.nameNutrint, this.onChanged, this.nutrientController})
-              : super(key: key);
+  const NutrientsGoal(
+      {Key? key, required this.nameNutrient, this.onChanged, this.nutrientController})
+      : super(key: key);
 
-          @override
-          Widget build(BuildContext context) {
-            return Row(
-              crossAxisAlignment: CrossAxisAlignment.end,
-              children: [
-                Flexible(
-                  child: TextFormField(
-                    textAlign: TextAlign.center,
-                    autofocus: false,
-                    controller: nutrientController,
+  @override
+  Widget build(BuildContext context) {
+    return Row(
+      crossAxisAlignment: CrossAxisAlignment.end,
+      children: [
+        Flexible(
+          child: TextFormField(
+            textAlign: TextAlign.center,
+            autofocus: false,
+            controller: nutrientController,
             style: const TextStyle(
               color: AppTheme.primary,
               fontWeight: FontWeight.w600,
@@ -154,7 +148,7 @@ class NutrientsGoal extends StatelessWidget {
             onChanged: onChanged,
           ),
         ),
-        Text(nameNutrint),
+        Text(nameNutrient),
       ],
     );
   }

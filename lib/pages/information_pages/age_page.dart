@@ -32,7 +32,7 @@ class _AgePageState extends State<AgePage> {
         mainAxisAlignment: MainAxisAlignment.center,
         crossAxisAlignment: CrossAxisAlignment.center,
         children: [
-          Text('what is your age ?'),
+          const Text('what is your age ?'),
           Padding(
             padding: EdgeInsets.symmetric(horizontal: width * 0.3),
             child: Row(

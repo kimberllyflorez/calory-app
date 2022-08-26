@@ -56,12 +56,11 @@ class _GenderPageState extends State<GenderPage> {
   _onPressedGender(int value) async {
     await PreferenceUtils.setBool(
       UserConstants.genderData,
-      isWomen == 1 ? false : true,
+      isWomen == 0,
     );
     setState(() {
       isWomen = value;
     });
-    print(isWomen);
   }
 
   _onTap() {

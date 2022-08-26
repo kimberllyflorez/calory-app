@@ -29,7 +29,7 @@ class _weightPageState extends State<weightPage> {
         mainAxisAlignment: MainAxisAlignment.center,
         crossAxisAlignment: CrossAxisAlignment.center,
         children: [
-          Text('what is your weight?'),
+          const Text('what is your weight?'),
           Padding(
             padding: EdgeInsets.symmetric(horizontal: width * 0.3),
             child: Row(

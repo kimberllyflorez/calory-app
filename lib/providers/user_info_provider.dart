@@ -1,6 +1,7 @@
 import 'package:calory_tracker/constants/user_constants.dart';
 import 'package:calory_tracker/helpers/preference.dart';
 import 'package:calory_tracker/model/model_user_info.dart';
+import 'package:calory_tracker/pages/information_pages/weight_page.dart';
 import 'package:flutter/foundation.dart';
 
 class UserDataProvider extends ChangeNotifier {
@@ -13,7 +14,6 @@ class UserDataProvider extends ChangeNotifier {
     final gender = await _getGender();
     final activityLevel = await _getActivityLevel();
     final goalWeight = await _getGoalWeight();
-    print(gender);
 
     userInfo = UserInfoModel(
       age: age,

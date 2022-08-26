@@ -7,6 +7,7 @@ class Product {
     required this.nutriments,
     this.productName,
     this.servingSize,
+    this.DaySave,
   });
 
   final String? code;
@@ -14,6 +15,7 @@ class Product {
   final Nutriments? nutriments;
   final String? productName;
   final String? servingSize;
+  final DateTime? DaySave;
 
   factory Product.fromMap(Map<String, dynamic> json) => Product(
         code: json["code"],
