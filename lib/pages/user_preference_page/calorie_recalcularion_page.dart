@@ -328,31 +328,11 @@ class _ButtonSave extends StatelessWidget {
   Widget build(BuildContext context) {
     return GestureDetector(
       onTap: () async {
-        final String prefAge = await PreferenceUtils.getString(UserConstants.age);
-        final bool? gender = await PreferenceUtils.getBool(UserConstants.genderData);
-        final String prefHeight = await PreferenceUtils.getString(UserConstants.height);
-        final double weight = await PreferenceUtils.getDouble(UserConstants.weight);
-        final int goalWeight = await PreferenceUtils.getInt(UserConstants.gainWeight);
-        final int activityNet = await PreferenceUtils.getInt(UserConstants.levelActivity);
-
-        var age = int.parse(prefAge);
-        var height = double.parse(prefHeight);
-        double activityLevel = UserConstants.activityLevels[activityNet] ?? 0.0;
-        int goal = UserConstants.goalWeights[goalWeight] ?? 0;
-
-        final calorieController = CalorieController(
-          weight: weight,
-          isWomen: gender ?? false,
-          height: height,
-          age: age,
-          net: activityLevel,
-          goal: goal,
-        );
-
-        final calories = calorieController.calcCalorie();
-        PreferenceUtils.setDouble(UserConstants.userCalories, calories);
+        final CalorieController calorieController = CalorieController();
+        await calorieController.setAndCalcCaloriesData();
         Navigator.pushNamed(context, 'calculatorFood');
-        Provider.of<UserDataProvider>(context, listen: false).getData();
+        await context.read<UserDataProvider>().loadUserInfoData();
+        await context.read<UserDataProvider>().saveUserInfo();
       },
       child: Container(
         decoration: BoxDecoration(

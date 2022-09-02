@@ -1,4 +1,6 @@
 import 'package:calory_tracker/providers/theme_modo_provider.dart';
+import 'package:calory_tracker/providers/user_info_provider.dart';
+import 'package:calory_tracker/repository/auth_repository.dart';
 import 'package:calory_tracker/widgets/backgraoun_image_profil_Widget.dart';
 import 'package:day_night_switcher/day_night_switcher.dart';
 import 'package:flutter/material.dart';
@@ -15,6 +17,7 @@ class UserPreferencePage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final authRepository = Provider.of<AuthRepository>(context, listen: false);
     final theme = context.watch<ThemeSelectProvider>().getThemeBool();
     return Scaffold(
       body: SingleChildScrollView(
@@ -27,6 +30,14 @@ class UserPreferencePage extends StatelessWidget {
             DayNightSwitcher(
               isDarkModeEnabled: theme,
               onStateChanged: (_) => onStateChanged(context, false),
+            ),
+            IconButton(
+              onPressed: () {
+                context.read<UserDataProvider>().clean();
+                authRepository.logout();
+                Navigator.pushReplacementNamed(context, 'login');
+              },
+              icon: Icon(Icons.login_outlined),
             ),
           ],
         ),
@@ -52,7 +63,7 @@ class DataProfile extends StatelessWidget {
         return ProfileButtons(
           iconName: buttonsProfilList[index].nameButton,
           iconButton: buttonsProfilList[index].iconButton,
-          route: buttonsProfilList[index].routeNavigator  ,
+          route: buttonsProfilList[index].routeNavigator,
         );
       },
       itemCount: buttonsProfilList.length,
@@ -93,7 +104,8 @@ class ProfileButtons extends StatelessWidget {
             textAlign: TextAlign.center,
           )),
           IconButton(
-            onPressed: () => Navigator.pushNamed(context, route  ?? 'calculatorFood') ,//todo hacer la rutas
+            onPressed: () => Navigator.pushNamed(context, route ?? 'calculatorFood'),
+            //todo hacer la rutas
             icon: const Icon(
               PhosphorIcons.arrow_bend_up_right,
             ),
@@ -125,7 +137,7 @@ final buttonsProfilList = <ProfileButtonModel>[
   ProfileButtonModel(
     nameButton: 'About me ',
     iconButton: PhosphorIcons.user_circle_gear_fill,
-    routeNavigator:  'calculatorFood',
+    routeNavigator: 'calculatorFood',
   ),
   ProfileButtonModel(
     nameButton: 'my calendar',

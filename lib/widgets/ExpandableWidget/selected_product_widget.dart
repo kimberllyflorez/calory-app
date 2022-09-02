@@ -1,4 +1,3 @@
-import 'package:calory_tracker/helpers/preference.dart';
 import 'package:calory_tracker/model/model_product.dart';
 import 'package:calory_tracker/providers/products_provider.dart';
 import 'package:calory_tracker/theme/app_theme.dart';
@@ -67,10 +66,11 @@ class _SelectProductState extends State<SelectProduct> {
                 ),
                 IconButton(
                   onPressed: () {
-                    final productGrams = controller.text;
-                    print(productGrams);
+                    final newProduct = widget.product.copyWith(
+                      addedOn: DateTime.now(),
+                    );
                     final provider = Provider.of<ProductsProvider>(context, listen: false);
-                    provider.addProduct(widget.product, widget.index);
+                    provider.addProduct(newProduct, widget.index);
                     Navigator.pop(context);
                   },
                   icon: const Icon(
@@ -95,10 +95,6 @@ class _SelectProductState extends State<SelectProduct> {
     return const AssetImage('assets/ic_dinner.png');
   }
 
-  _onChange(String key, String value) async {
-    //TODO ESTO PUEDE SER OPCIONAL
-    await PreferenceUtils.setString(key, value);
-  }
 }
 
 class _MacrosProductSelect extends StatelessWidget {

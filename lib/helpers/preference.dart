@@ -33,4 +33,9 @@ class PreferenceUtils {
     final prefs = await SharedPreferences.getInstance();
     return prefs.getBool(key);
   }
+
+  static Future<void> clean() async {
+    final prefs = await SharedPreferences.getInstance();
+    await prefs.clear();
+  }
 }

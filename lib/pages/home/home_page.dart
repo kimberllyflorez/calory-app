@@ -1,7 +1,7 @@
 import 'package:calory_tracker/pages/user_preference_page/user_preference_page.dart';
 import 'package:calory_tracker/widgets/ExpandableWidget/list_meals_widget.dart';
 import 'package:flutter/material.dart';
-import '../widgets/percent_indicator_widget.dart';
+import '../../widgets/percent_indicator_widget.dart';
 
 class HomePage extends StatelessWidget {
   const HomePage({Key? key}) : super(key: key);

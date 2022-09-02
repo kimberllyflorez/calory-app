@@ -1,3 +1,5 @@
+import 'package:calory_tracker/pages/Login/check_auth_page.dart';
+import 'package:calory_tracker/pages/Login/register_page.dart';
 import 'package:calory_tracker/pages/pages.dart';
 import 'package:flutter/material.dart';
 
@@ -13,5 +15,9 @@ class Routes {
     'goalPage': (_) => const GoalPage(),
     'calculatorFood': (_) =>  HomePage(),
     'calorierecalculation': (_) => CalorieRecalculationPage(),
+    'login': (_) => LoginScreen(),
+    'register': (_)=> RegisterPage(),
+    'cheackAuth': (_)=> CheckAuthPage(),
+
   };
 }

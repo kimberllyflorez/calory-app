@@ -7,7 +7,7 @@ class Product {
     required this.nutriments,
     this.productName,
     this.servingSize,
-    this.DaySave,
+    this.addedOn,
   });
 
   final String? code;
@@ -15,7 +15,24 @@ class Product {
   final Nutriments? nutriments;
   final String? productName;
   final String? servingSize;
-  final DateTime? DaySave;
+  final DateTime? addedOn;
+
+  Product copyWith({
+    String? code,
+    String? imageUrl,
+    Nutriments? nutriments,
+    String? productName,
+    String? servingSize,
+    DateTime? addedOn,
+  }) =>
+      Product(
+        code: code ?? this.code,
+        imageUrl: imageUrl ?? this.imageUrl,
+        nutriments: nutriments ?? this.nutriments,
+        productName: productName ?? this.productName,
+        servingSize: servingSize ?? this.servingSize,
+        addedOn: addedOn ?? this.addedOn,
+      );
 
   factory Product.fromMap(Map<String, dynamic> json) => Product(
         code: json["code"],
@@ -27,5 +44,6 @@ class Product {
               ),
         productName: json["product_name"],
         servingSize: json["serving_size"],
+        addedOn: json["added_on"],
       );
 }

@@ -13,6 +13,8 @@ class UserConstants {
   static const themeSelect = 'theme_select';
   static const selectedNumber = 'selectedNumber';
 
+
+
   static const Map<int, double> activityLevels = {
     0: 1.3,
     1: 1.4,

@@ -1,55 +1,75 @@
-import 'package:calory_tracker/constants/user_constants.dart';
-import 'package:calory_tracker/helpers/preference.dart';
 import 'package:calory_tracker/model/model_user_info.dart';
-import 'package:calory_tracker/pages/information_pages/weight_page.dart';
+import 'package:calory_tracker/providers/user_preferences_helper.dart';
+import 'package:calory_tracker/repository/auth_repository.dart';
+import 'package:calory_tracker/repository/user_repository.dart';
 import 'package:flutter/foundation.dart';
 
 class UserDataProvider extends ChangeNotifier {
+  final AuthRepository? authRepository;
+  late final UserRepository _userRepository;
   UserInfoModel userInfo = UserInfoModel();
+  bool userHasInitialData = false;
 
-  Future getData() async {
-    final age = await _getAge();
-    final weight = await _getWeight();
-    final height = await _getHeight();
-    final gender = await _getGender();
-    final activityLevel = await _getActivityLevel();
-    final goalWeight = await _getGoalWeight();
+  UserDataProvider({
+    this.authRepository,
+  }) {
+    _userRepository = UserRepository();
+  }
 
-    userInfo = UserInfoModel(
-      age: age,
-      weight: weight,
-      height: height,
-      gender: gender,
-      activityLevel: activityLevel,
-      goalWeight: goalWeight,
-    );
+  Future loadUserInfoData() async {
+    await _getUserDataFromLocal();
+  }
+
+  Future loadInitialUserData() async {
+    final helper = UserPreferencesHelper();
+    userHasInitialData = await helper.getUserHasData();
+    if (userHasInitialData) {
+      await _getUserDataFromLocal();
+    } else {
+      await _getUserInfoFromDB();
+    }
+    return userHasInitialData;
+  }
+
+  Future<void> _getUserDataFromLocal() async {
+    final helper = UserPreferencesHelper();
+    userInfo = await helper.getUserInfoModel();
+    userHasInitialData = true;
     notifyListeners();
   }
 
-  Future _getWeight() async {
-    return await PreferenceUtils.getDouble(UserConstants.weight);
+  Future saveUserInfo() async {
+    await _saveUserInfo();
   }
 
-  Future _getHeight() async {
-    final value = await PreferenceUtils.getString(UserConstants.height);
-    return double.parse(value);
+  Future<void> _getUserInfoFromDB() async {
+    final helper = UserPreferencesHelper();
+    userInfo = await _getUserInfo();
+    await helper.setUserInfoModel(userInfo);
+    userHasInitialData = true;
+    notifyListeners();
   }
 
-  Future _getGender() async {
-    final data = await PreferenceUtils.getBool(UserConstants.genderData);
-    return data ?? false;
+  void clean(){
+    userInfo = UserInfoModel();
+    userHasInitialData = false;
   }
 
-  Future<int> _getAge() async {
-    final value = await PreferenceUtils.getString(UserConstants.age);
-    return int.parse(value);
+  @override
+  void dispose() {
+    clean();
+    super.dispose();
+  }
+}
+
+extension _UserDataProvider on UserDataProvider {
+  Future<bool> _saveUserInfo() async {
+    final userId = await authRepository?.getUserId() ?? '';
+    return await _userRepository.saveUserData(userId, userInfo);
   }
 
-  Future _getActivityLevel() async {
-    return await PreferenceUtils.getInt(UserConstants.levelActivity);
-  }
-
-  Future _getGoalWeight() async {
-    return await PreferenceUtils.getInt(UserConstants.gainWeight);
+  Future<UserInfoModel> _getUserInfo() async {
+    final userId = await authRepository?.getUserId() ?? '';
+    return await _userRepository.getUserData(userId);
   }
 }
