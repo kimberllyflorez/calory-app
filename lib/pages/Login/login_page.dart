@@ -1,5 +1,6 @@
 import 'package:calory_tracker/pages/pages.dart';
 import 'package:calory_tracker/providers/login_provider.dart';
+import 'package:calory_tracker/providers/products_provider.dart';
 import 'package:calory_tracker/providers/user_info_provider.dart';
 import 'package:calory_tracker/repository/auth_repository.dart';
 import 'package:calory_tracker/repository/notification_repository.dart';
@@ -25,7 +26,7 @@ class LoginScreen extends StatelessWidget {
                 SizedBox(
                   height: 50,
                 ),
-                ButtoncreateAccont(),
+                ButtonCreateAccount(),
               ],
             ),
           ),
@@ -35,8 +36,8 @@ class LoginScreen extends StatelessWidget {
   }
 }
 
-class ButtoncreateAccont extends StatelessWidget {
-  const ButtoncreateAccont({Key? key}) : super(key: key);
+class ButtonCreateAccount extends StatelessWidget {
+  const ButtonCreateAccount({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -63,12 +64,13 @@ class CardContainer extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final productsProvider = Provider.of<ProductsProvider>(context, listen: false);
     final loginForm = Provider.of<LoginFormProvider>(context);
 
     return Container(
       margin: const EdgeInsets.only(right: 30, left: 30),
       alignment: Alignment.center,
-      height: MediaQuery.of(context).size.height * 0.3,
+      height: MediaQuery.of(context).size.height * 0.35,
       //todo ajustar
       decoration: BoxDecoration(
         color: Colors.white,
@@ -88,11 +90,11 @@ class CardContainer extends StatelessWidget {
           ),
           const Text(
             'Login',
-            style: TextStyle(fontWeight: FontWeight.bold),
+            style: TextStyle(fontWeight: FontWeight.bold, color: Colors.black38),
           ),
           const _LoginForm(),
           MaterialButton(
-            onPressed: () => _onPressedLogin(context),
+            onPressed: () => _onPressedLogin(context, productsProvider),
             shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(10)),
             disabledColor: Colors.grey,
             color: AppTheme.primary,
@@ -103,7 +105,7 @@ class CardContainer extends StatelessWidget {
     );
   }
 
-  void _onPressedLogin(BuildContext context) async {
+  void _onPressedLogin(BuildContext context, ProductsProvider productsProvider) async {
     FocusScope.of(context).unfocus();
     final loginForm = Provider.of<LoginFormProvider>(context, listen: false);
     final authService = Provider.of<AuthRepository>(context, listen: false);
@@ -114,6 +116,7 @@ class CardContainer extends StatelessWidget {
 
     if (errorMessage == null) {
       final userHasInitialData = await context.read<UserDataProvider>().loadInitialUserData();
+      await productsProvider.loadProductsFromDB();
       Navigator.pushReplacementNamed(context, userHasInitialData ? 'calculatorFood' : 'helloPage');
     } else {
       NotificationRepository.showSnackbar(errorMessage);

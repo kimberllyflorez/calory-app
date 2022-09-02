@@ -146,8 +146,57 @@ class Nutriments {
             json["trans-fat_unit"] == null ? null : unitValues.map[json["trans-fat_unit"]],
       );
 
+  factory Nutriments.fromFirebaseMap(Map<dynamic, dynamic> json) => Nutriments(
+        carbohydrates: checkNumberType(json["carbohydrates"]),
+        carbohydratesServing: json["carbohydrates_serving"],
+        carbohydratesUnit:
+            json["carbohydrates_unit"] == null ? null : unitValues.map[json["carbohydrates_unit"]],
+        energyKcal: checkNumberType(json["energy-kcal"]),
+        energyKcalServing: checkNumberType(json["energy-kcal_serving"]),
+        energyKcalUnit: json["energy-kcal_unit"] == null
+            ? null
+            : energyUnitValues.map[json["energy-kcal_unit"]],
+        energyKj: checkNumberType(json["energy-kj"]),
+        energyKjServing: checkNumberType(json["energy-kj_serving"]),
+        energyKjUnit:
+            json["energy-kj_unit"] == null ? null : energyUnitValues.map[json["energy-kj_unit"]],
+        energy100G: checkNumberType(json["energy_100g"]),
+        energyServing: checkNumberType(json["energy_serving"]),
+        energyUnit: json["energy_unit"] == null ? null : energyUnitValues.map[json["energy_unit"]],
+        fat: checkNumberType(json["fat"]),
+        fatServing: checkNumberType(json["fat_serving"]),
+        fatUnit: json["fat_unit"] == null ? null : unitValues.map[json["fat_unit"]],
+        fiber: checkNumberType(json["fiber"]),
+        fiberServing: json["fiber_serving"],
+        fiberUnit: json["fiber_unit"] == null ? null : unitValues.map[json["fiber_unit"]],
+        proteins: checkNumberType(json["proteins"]),
+        proteinsServing: checkNumberType(json["proteins_serving"]),
+        proteinsUnit: json["proteins_unit"] == null ? null : unitValues.map[json["proteins_unit"]],
+        salt: checkNumberType(json["salt"]),
+        saltServing: checkNumberType(json["salt_serving"]),
+        saltUnit: json["salt_unit"] == null ? null : unitValues.map[json["salt_unit"]],
+        saturatedFat: checkNumberType(json["saturated-fat"]),
+        saturatedFatServing: checkNumberType(json["saturated-fat_serving"]),
+        saturatedFatUnit:
+            json["saturated-fat_unit"] == null ? null : unitValues.map[json["saturated-fat_unit"]],
+        sodium: checkNumberType(json["sodium"]),
+        sodiumServing: checkNumberType(json["sodium_serving"]),
+        sodiumUnit: json["sodium_unit"] == null ? null : unitValues.map[json["sodium_unit"]],
+        sugars: checkNumberType(json["sugars"]),
+        sugarsServing: checkNumberType(json["sugars_serving"]),
+        sugarsUnit: json["sugars_unit"] == null ? null : unitValues.map[json["sugars_unit"]],
+        cholesterol: checkNumberType(json["cholesterol"]),
+        cholesterolServing: checkNumberType(json["cholesterol_serving"]),
+        cholesterolUnit:
+            json["cholesterol_unit"] == null ? null : unitValues.map[json["cholesterol_unit"]],
+        transFat: checkNumberType(json["trans-fat"]),
+        transFatServing: checkNumberType(json["trans-fat_serving"]),
+        transFatUnit:
+            json["trans-fat_unit"] == null ? null : unitValues.map[json["trans-fat_unit"]],
+      );
+
   Map<String, dynamic> toMap() => {
-        "carbohydrates": unitValues.reverse?[carbohydrates],
+        "carbohydrates": carbohydrates,
         "carbohydrates_serving": carbohydratesServing,
         "carbohydrates_unit": unitValues.reverse?[carbohydratesUnit],
         "energy": energy,
@@ -178,16 +227,22 @@ class Nutriments {
         "sodium_unit": unitValues.reverse?[sodiumUnit],
         "sugars": sugars,
         "sugars_serving": sugarsServing,
-        "sugars_unit":  unitValues.reverse?[sugarsUnit],
+        "sugars_unit": unitValues.reverse?[sugarsUnit],
         "sugars_value": sugarsValue,
       };
 
   static checkNumberType(dynamic value) {
-    if (value.runtimeType == double) {
-      return value.toInt().toDouble();
+    if (value != null) {
+      if(value.runtimeType == int){
+        return value.toDouble();
+      }
+      if(value.runtimeType == String){
+        final newValue = double.tryParse(value);
+        if (newValue != null) {
+          return newValue;
+        }
+      }
     }
-    if (value.runtimeType == double) {
-      return value.toDouble();
-    }
+    return value;
   }
 }

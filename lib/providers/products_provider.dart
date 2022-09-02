@@ -1,3 +1,4 @@
+import 'package:calory_tracker/helpers/number_helper.dart';
 import 'package:calory_tracker/model/model_macros.dart';
 import 'package:calory_tracker/model/model_product.dart';
 import 'package:calory_tracker/repository/auth_repository.dart';
@@ -8,10 +9,10 @@ class ProductsProvider extends ChangeNotifier {
   final AuthRepository? authRepository;
   late final MealsRepository _mealsRepository;
 
-  final List<Product> breakfastProduct = [];
-  final List<Product> lunchProduct = [];
-  final List<Product> dinnerProduct = [];
-  final List<Product> snackProduct = [];
+  List<Product> breakfastProduct = [];
+  List<Product> lunchProduct = [];
+  List<Product> dinnerProduct = [];
+  List<Product> snackProduct = [];
 
   double totalSelectedCalories = 0.0;
   double totalSelectProtein = 0.0;
@@ -90,7 +91,7 @@ class ProductsProvider extends ChangeNotifier {
     for (var product in products) {
       macro += product.nutriments?.proteins ?? 0.0;
     }
-    return macro;
+    return macro.toPrecision(2);
   }
 
   double _calcFatGrams(List<Product> products) {
@@ -98,7 +99,7 @@ class ProductsProvider extends ChangeNotifier {
     for (var product in products) {
       macro += product.nutriments?.fat ?? 0.0;
     }
-    return macro;
+    return macro.toPrecision(2);
   }
 
   double _calcCarbGrams(List<Product> products) {
@@ -106,15 +107,15 @@ class ProductsProvider extends ChangeNotifier {
     for (var product in products) {
       macro += product.nutriments?.carbohydrates ?? 0.0;
     }
-    return macro;
+    return macro.toPrecision(2);
   }
 
   double _totalCaloriesPerList(List<Product> products) {
     double macro = 0.0;
     for (var product in products) {
-      macro += product.nutriments?.energyKcalServing ?? 0.0;
+      macro += product.nutriments?.energyKcal ?? 0.0;
     }
-    return macro;
+    return macro.toPrecision(2);
   }
 
   void _calcTotalCalories() {
@@ -122,19 +123,38 @@ class ProductsProvider extends ChangeNotifier {
     final lunchMacro = _getMacrosPerList(lunchProduct);
     final dinnerMacro = _getMacrosPerList(dinnerProduct);
     final snackMacro = _getMacrosPerList(snackProduct);
-    totalSelectProtein = breakfastMacro.proteinGrams +
+    final totalProtein = breakfastMacro.proteinGrams +
         lunchMacro.proteinGrams +
         dinnerMacro.proteinGrams +
         snackMacro.proteinGrams;
-    totalSelectCarbs = breakfastMacro.carbohydrateGrams +
+    final totalCarbs = breakfastMacro.carbohydrateGrams +
         lunchMacro.carbohydrateGrams +
         dinnerMacro.carbohydrateGrams +
         snackMacro.carbohydrateGrams;
-    totalSelectFats =
+    final totalFats =
         breakfastMacro.fatGrams + lunchMacro.fatGrams + dinnerMacro.fatGrams + snackMacro.fatGrams;
-    totalSelectedCalories = breakfastMacro.totalCalories +
+    final totalCal = breakfastMacro.totalCalories +
         lunchMacro.totalCalories +
         dinnerMacro.totalCalories +
         snackMacro.totalCalories;
+    totalSelectProtein = totalProtein.toPrecision(2);
+    totalSelectCarbs = totalCarbs.toPrecision(2);
+    totalSelectFats = totalFats.toPrecision(2);
+    totalSelectedCalories = totalCal.toPrecision(2);
+  }
+
+  Future<void> loadProductsFromDB() async {
+    breakfastProduct = await _getProductByMeal('breakfast');
+    lunchProduct = await _getProductByMeal('lunch');
+    dinnerProduct = await _getProductByMeal('dinner');
+    lunchProduct = await _getProductByMeal('snack');
+
+    _calcTotalCalories();
+    notifyListeners();
+  }
+
+  Future<List<Product>> _getProductByMeal(String mealName) async {
+    final userId = await authRepository?.getUserId() ?? '';
+    return await _mealsRepository.getMealsData(userId, mealName);
   }
 }

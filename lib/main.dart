@@ -27,7 +27,6 @@ class AppState extends StatelessWidget {
       providers: [
         ChangeNotifierProvider(create: (_) => AuthRepository()),
         ChangeNotifierProvider(create: (_) => FoodProvider()),
-        //ChangeNotifierProvider(create: (_) => ProductsProvider()),
         ChangeNotifierProvider(create: (_) => ThemeSelectProvider()),
         ChangeNotifierProvider(create: (_) => LoginFormProvider()),
         ChangeNotifierProxyProvider<AuthRepository, UserDataProvider>(

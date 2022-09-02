@@ -15,28 +15,25 @@ class MealsRepository {
     }
   }
 
-  // Future<UserInfoModel> getMealsData(String userId) async {
-  //   try {
-  //     DatabaseReference ref = FirebaseDatabase.instance.ref();
-  //     final snapshot = await ref.child('$userId/user_info').get();
-  //     if (snapshot.exists) {
-  //       final data = snapshot.value as Map<dynamic, dynamic>;
-  //       return UserInfoModel(
-  //         weight: (data['weight'] as int).toDouble(),
-  //         height: (data['height'] as int).toDouble(),
-  //         goalWeight: data['goal_weight'],
-  //         gender: data['gender'],
-  //         activityLevel: data['activity_level'],
-  //         age: data['age'],
-  //         userCalories: data['user_calories'],
-  //       );
-  //     } else {
-  //       print('No data available.');
-  //     }
-  //     return UserInfoModel();
-  //   } catch (e) {
-  //     log(e.toString());
-  //     return UserInfoModel();
-  //   }
-  // }
+  Future<List<Product>> getMealsData(String userId, String mealName) async {
+    final List<Product> productList = [];
+    try {
+      DatabaseReference ref = FirebaseDatabase.instance.ref();
+      final snapshot = await ref.child('$userId/meals/$mealName/').get();
+      if (snapshot.exists) {
+        final data = snapshot.value as Map<dynamic, dynamic>;
+        data.forEach((key, value) {
+          productList.add(Product.fromFirebaseMap(value));
+        });
+      } else {
+        print('No data available.');
+      }
+      return productList;
+    } catch (e) {
+      log(e.toString());
+      return productList;
+    }
+  }
 }
+
+

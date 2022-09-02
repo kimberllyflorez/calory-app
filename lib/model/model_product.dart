@@ -40,17 +40,28 @@ class Product {
         nutriments: json["nutriments"] == null || json["nutriments"].isEmpty
             ? null
             : Nutriments.fromMap(json["nutriments"]),
-        productName: json["product_name"],
+        productName: json["product_name"].toString(),
         servingSize: json["serving_size"],
         addedOn: json["added_on"],
       );
 
+  factory Product.fromFirebaseMap(Map<dynamic, dynamic> json) => Product(
+    code: json["code"] ?? '',
+    imageUrl: json["image_url"] ?? '',
+    nutriments: json["nutriments"] == null || json["nutriments"].isEmpty
+        ? null
+        : Nutriments.fromFirebaseMap(json["nutriments"]),
+    productName: json["product_name"] ?? '',
+    servingSize: json["serving_size"] ?? '',
+    addedOn: DateTime.parse(json["added_on"]),
+  );
+
   Map<String, dynamic> toMap() => {
         'code': code,
-        'imageUrl': imageUrl,
+        'image_url': imageUrl,
         'nutriments': nutriments?.toMap(),
-        'productName': productName,
-        'servingSize': servingSize,
-        'addedOn': addedOn?.toIso8601String(),
+        'product_name': productName,
+        'serving_size': servingSize,
+        'added_on': addedOn?.toIso8601String(),
       };
 }

@@ -1,3 +1,4 @@
+import 'package:calory_tracker/theme/app_theme.dart';
 import 'package:flutter/material.dart';
 
 class NotificationRepository {
@@ -7,11 +8,12 @@ class NotificationRepository {
   static showSnackbar(String message) {
     final snackBar = SnackBar(
       content: Container(
-          color: Colors.white10,
+          //color: AppTheme.secundary,
           child: Text(
         message,
-        style: const TextStyle(color: Colors.purple),
-      )),
+        style: const TextStyle(color: AppTheme.primary,fontSize: 28),
+      ),
+      ),
     );
     messengerKey.currentState!.showSnackBar(snackBar);
   }

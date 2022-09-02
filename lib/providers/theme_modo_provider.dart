@@ -2,7 +2,6 @@ import 'package:calory_tracker/constants/user_constants.dart';
 import 'package:calory_tracker/helpers/preference.dart';
 import 'package:flutter/material.dart';
 
-//todo guardare la seleccion del tema
 class ThemeSelectProvider extends ChangeNotifier {
   late ThemeMode theme;
 
