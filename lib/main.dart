@@ -27,12 +27,16 @@ class AppState extends StatelessWidget {
       providers: [
         ChangeNotifierProvider(create: (_) => AuthRepository()),
         ChangeNotifierProvider(create: (_) => FoodProvider()),
-        ChangeNotifierProvider(create: (_) => ProductsProvider()),
+        //ChangeNotifierProvider(create: (_) => ProductsProvider()),
         ChangeNotifierProvider(create: (_) => ThemeSelectProvider()),
         ChangeNotifierProvider(create: (_) => LoginFormProvider()),
         ChangeNotifierProxyProvider<AuthRepository, UserDataProvider>(
           create: (_) => UserDataProvider(),
           update: (_, authRepository, __) => UserDataProvider(authRepository: authRepository),
+        ),
+        ChangeNotifierProxyProvider<AuthRepository, ProductsProvider>(
+          create: (_) => ProductsProvider(),
+          update: (_, authRepository, __) => ProductsProvider(authRepository: authRepository),
         ),
       ],
       child: const CalorieApp(),

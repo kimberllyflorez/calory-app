@@ -1,8 +1,13 @@
 import 'package:calory_tracker/model/model_macros.dart';
 import 'package:calory_tracker/model/model_product.dart';
+import 'package:calory_tracker/repository/auth_repository.dart';
+import 'package:calory_tracker/repository/meals_repository.dart';
 import 'package:flutter/material.dart';
 
 class ProductsProvider extends ChangeNotifier {
+  final AuthRepository? authRepository;
+  late final MealsRepository _mealsRepository;
+
   final List<Product> breakfastProduct = [];
   final List<Product> lunchProduct = [];
   final List<Product> dinnerProduct = [];
@@ -15,13 +20,37 @@ class ProductsProvider extends ChangeNotifier {
 
   bool isSelectProduct = false;
 
-  void addProduct(Product product, int index) {
-    if (index == 0) breakfastProduct.add(product);
-    if (index == 1) lunchProduct.add(product);
-    if (index == 2) dinnerProduct.add(product);
-    if (index == 3) snackProduct.add(product);
+  ProductsProvider({
+    this.authRepository,
+  }) {
+    _mealsRepository = MealsRepository();
+  }
+
+  Future<void> addProduct(Product product, int index) async {
+    if (index == 0) {
+      breakfastProduct.add(product);
+      await _saveDataToDB(product, 'breakfast');
+    }
+    if (index == 1) {
+      lunchProduct.add(product);
+      await _saveDataToDB(product, 'lunch');
+    }
+
+    if (index == 2) {
+      dinnerProduct.add(product);
+      await _saveDataToDB(product, 'dinner');
+    }
+    if (index == 3) {
+      snackProduct.add(product);
+      await _saveDataToDB(product, 'snack');
+    }
     _calcTotalCalories();
     notifyListeners();
+  }
+
+  Future<void> _saveDataToDB(Product product, String mealName) async {
+    final userId = await authRepository?.getUserId() ?? '';
+    _mealsRepository.saveMealsData(userId, product, mealName);
   }
 
   void removeProduct(Product product, int index) {
@@ -59,7 +88,7 @@ class ProductsProvider extends ChangeNotifier {
   double _calcProteinGrams(List<Product> products) {
     double macro = 0.0;
     for (var product in products) {
-      macro += product.nutriments?.proteins100G ?? 0.0;
+      macro += product.nutriments?.proteins ?? 0.0;
     }
     return macro;
   }
@@ -67,7 +96,7 @@ class ProductsProvider extends ChangeNotifier {
   double _calcFatGrams(List<Product> products) {
     double macro = 0.0;
     for (var product in products) {
-      macro += product.nutriments?.fat100G ?? 0.0;
+      macro += product.nutriments?.fat ?? 0.0;
     }
     return macro;
   }
@@ -75,7 +104,7 @@ class ProductsProvider extends ChangeNotifier {
   double _calcCarbGrams(List<Product> products) {
     double macro = 0.0;
     for (var product in products) {
-      macro += product.nutriments?.carbohydrates100G ?? 0.0;
+      macro += product.nutriments?.carbohydrates ?? 0.0;
     }
     return macro;
   }

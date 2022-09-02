@@ -39,11 +39,18 @@ class Product {
         imageUrl: json["image_url"],
         nutriments: json["nutriments"] == null || json["nutriments"].isEmpty
             ? null
-            : Nutriments.fromMap(
-                json["nutriments"],
-              ),
+            : Nutriments.fromMap(json["nutriments"]),
         productName: json["product_name"],
         servingSize: json["serving_size"],
         addedOn: json["added_on"],
       );
+
+  Map<String, dynamic> toMap() => {
+        'code': code,
+        'imageUrl': imageUrl,
+        'nutriments': nutriments?.toMap(),
+        'productName': productName,
+        'servingSize': servingSize,
+        'addedOn': addedOn?.toIso8601String(),
+      };
 }

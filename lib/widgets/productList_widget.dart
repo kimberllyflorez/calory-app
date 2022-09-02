@@ -68,21 +68,21 @@ class SelectProductToList extends StatelessWidget {
             children: [
               Column(
                 children: [
-                  Text(product.nutriments?.proteins100G.toString() ?? ':('),
+                  Text(product.nutriments?.proteins.toString() ?? ':('),
                   const Text('protein'),
                 ],
               ),
               const SizedBox(width: 5),
               Column(
                 children: [
-                  Text(product.nutriments?.carbohydrates100G.toString() ?? '(:'),
+                  Text(product.nutriments?.carbohydrates.toString() ?? '(:'),
                   const Text('carbs'),
                 ],
               ),
               const SizedBox(width: 5),
               Column(
                 children: [
-                  Text(product.nutriments?.fat100G.toString() ?? ':('),
+                  Text(product.nutriments?.fat.toString() ?? ':('),
                   const Text('fat'),
                 ],
               ),

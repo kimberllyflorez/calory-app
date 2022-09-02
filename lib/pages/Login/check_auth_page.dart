@@ -41,9 +41,12 @@ class CheckAuthPage extends StatelessWidget {
             );
           }
         }
-        return const Scaffold(
-          body: Center(
-            child: Text('Loading ...'),
+        return Container(
+          color: Colors.white,
+          child: const Scaffold(
+            body: Center(
+              child: Text('Loading ...'),
+            ),
           ),
         );
       },
