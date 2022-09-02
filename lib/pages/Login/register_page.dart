@@ -30,15 +30,15 @@ class RegisterPage extends StatelessWidget {
                   height: 50,
                 ),
                 TextButton(
-                  onPressed: () => Navigator.pushReplacementNamed(context, 'login'),
+                  onPressed: () => Navigator.pop(context),
                   style: ButtonStyle(
                     overlayColor: MaterialStateProperty.all(
-                       AppTheme.primary.withOpacity(0.5),
+                      AppTheme.primary.withOpacity(0.5),
                     ),
                     shape: MaterialStateProperty.all(const StadiumBorder()),
                   ),
                   child: const Text(
-                    'have an account yet?',
+                    'Already have account',
                     style: TextStyle(color: AppTheme.primary),
                   ),
                 ),
@@ -56,6 +56,7 @@ class CardContainer extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final loginForm = Provider.of<LoginFormProvider>(context);
     return Container(
       margin: const EdgeInsets.only(right: 30, left: 30),
       padding: const EdgeInsets.all(10.0),
@@ -76,7 +77,10 @@ class CardContainer extends StatelessWidget {
           const SizedBox(height: 20),
           const Text(
             'Create account',
-            style: TextStyle(fontWeight: FontWeight.bold),
+            style: TextStyle(
+              fontWeight: FontWeight.bold,
+              color: Colors.black38,
+            ),
           ),
           const _LoginForm(),
           const SizedBox(height: 20),
@@ -85,7 +89,7 @@ class CardContainer extends StatelessWidget {
             shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(10)),
             disabledColor: Colors.grey,
             color: AppTheme.primary,
-            child: const Text('create'), //loginForm.isLoaging ? 'wait plese' : 'Sign in'
+            child: Text(loginForm.isLoaging ? 'Loading' : 'Register'), //
           ),
         ],
       ),
@@ -96,6 +100,8 @@ class CardContainer extends StatelessWidget {
     FocusScope.of(context).unfocus();
     final loginForm = Provider.of<LoginFormProvider>(context, listen: false);
     if (!loginForm.isValidateRegisterKey()) return;
+    loginForm.isLoading = true;
+
     final authRepository = Provider.of<AuthRepository>(context, listen: false);
     final bool userHasInitialData = await _loadUserData() ?? false;
     final String? errorMessage =
@@ -111,6 +117,7 @@ class CardContainer extends StatelessWidget {
     } else {
       NotificationRepository.showSnackbar(errorMessage);
     }
+    loginForm.isLoading = false;
   }
 
   Future<bool?> _loadUserData() async {
@@ -142,6 +149,9 @@ class _LoginForm extends StatelessWidget {
                 labeText: 'Email',
                 prefixIcon: Icons.email,
               ),
+              style: const TextStyle(
+                color: Colors.black,
+              ),
               onChanged: (value) => loginForm.email = value,
               validator: (value) {
                 String pattern =
@@ -163,11 +173,14 @@ class _LoginForm extends StatelessWidget {
                 hintText: '*******',
                 prefixIcon: Icons.lock,
               ),
+              style: const TextStyle(
+                color: Colors.black,
+              ),
               onChanged: (value) => loginForm.password = value,
               validator: (value) {
                 return (value != null && value.length >= 6)
                     ? null
-                    : 'your password should most be 6 characters ';
+                    : 'Your password should most be 6 characters ';
               },
             ),
           ],

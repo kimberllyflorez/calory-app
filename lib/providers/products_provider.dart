@@ -54,11 +54,24 @@ class ProductsProvider extends ChangeNotifier {
     _mealsRepository.saveMealsData(userId, product, mealName);
   }
 
-  void removeProduct(Product product, int index) {
-    if (index == 0) breakfastProduct.remove(product);
-    if (index == 1) lunchProduct.remove(product);
-    if (index == 2) dinnerProduct.remove(product);
-    if (index == 3) snackProduct.remove(product);
+  Future<void> removeProduct(Product product, int index) async {
+    final productId = product.id ?? '';
+    if (index == 0) {
+      breakfastProduct.remove(product);
+      _deleteProductFromMeals('breakfast', productId);
+    }
+    if (index == 1) {
+      lunchProduct.remove(product);
+      await _deleteProductFromMeals('lunch', productId);
+    }
+    if (index == 2) {
+      dinnerProduct.remove(product);
+      await _deleteProductFromMeals('dinner', productId);
+    }
+    if (index == 3) {
+      snackProduct.remove(product);
+      await _deleteProductFromMeals('snack', productId);
+    }
     _calcTotalCalories();
     notifyListeners();
   }
@@ -156,5 +169,10 @@ class ProductsProvider extends ChangeNotifier {
   Future<List<Product>> _getProductByMeal(String mealName) async {
     final userId = await authRepository?.getUserId() ?? '';
     return await _mealsRepository.getMealsData(userId, mealName);
+  }
+
+  Future<bool> _deleteProductFromMeals(String mealName, String productId) async {
+    final userId = await authRepository?.getUserId() ?? '';
+    return await _mealsRepository.deleteProductFromMeals(userId, mealName, productId);
   }
 }

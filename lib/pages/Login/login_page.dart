@@ -5,6 +5,7 @@ import 'package:calory_tracker/providers/user_info_provider.dart';
 import 'package:calory_tracker/repository/auth_repository.dart';
 import 'package:calory_tracker/repository/notification_repository.dart';
 import 'package:calory_tracker/theme/app_theme.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
@@ -42,7 +43,7 @@ class ButtonCreateAccount extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return TextButton(
-      onPressed: () => Navigator.pushReplacementNamed(context, 'register'),
+      onPressed: () => Navigator.pushNamed(context, 'register'),
       style: ButtonStyle(
         overlayColor: MaterialStateProperty.all(
           AppTheme.primary.withOpacity(0.5),
@@ -52,7 +53,7 @@ class ButtonCreateAccount extends StatelessWidget {
         ),
       ),
       child: const Text(
-        'Crear nueva cuenta',
+        "Don't have account",
         style: TextStyle(color: AppTheme.primary),
       ),
     );
@@ -69,9 +70,8 @@ class CardContainer extends StatelessWidget {
 
     return Container(
       margin: const EdgeInsets.only(right: 30, left: 30),
+      padding: const EdgeInsets.all(10.0),
       alignment: Alignment.center,
-      height: MediaQuery.of(context).size.height * 0.35,
-      //todo ajustar
       decoration: BoxDecoration(
         color: Colors.white,
         borderRadius: BorderRadius.circular(20),
@@ -90,15 +90,19 @@ class CardContainer extends StatelessWidget {
           ),
           const Text(
             'Login',
-            style: TextStyle(fontWeight: FontWeight.bold, color: Colors.black38),
+            style: TextStyle(
+              fontWeight: FontWeight.bold,
+              color: Colors.black38,
+            ),
           ),
           const _LoginForm(),
+          const SizedBox(height: 20),
           MaterialButton(
             onPressed: () => _onPressedLogin(context, productsProvider),
             shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(10)),
             disabledColor: Colors.grey,
             color: AppTheme.primary,
-            child: Text(loginForm.isLoaging ? 'wait plese' : 'Sign in'),
+            child: Text(loginForm.isLoaging ? 'Loading' : 'Sign in'),
           ),
         ],
       ),
@@ -121,6 +125,7 @@ class CardContainer extends StatelessWidget {
     } else {
       NotificationRepository.showSnackbar(errorMessage);
     }
+    loginForm.isLoading = false;
   }
 }
 
@@ -142,10 +147,14 @@ class _LoginForm extends StatelessWidget {
               autovalidateMode: AutovalidateMode.onUserInteraction,
               autocorrect: false,
               keyboardType: TextInputType.emailAddress,
+              cursorColor: AppTheme.primary,
               decoration: InputDecorations.authDecoration(
                 hintText: 'email@email.com',
                 labeText: 'Email',
                 prefixIcon: Icons.email,
+              ),
+              style: const TextStyle(
+                color: Colors.black,
               ),
               onChanged: (value) => loginForm.email = value,
               validator: (value) {
@@ -168,10 +177,13 @@ class _LoginForm extends StatelessWidget {
                 hintText: '*******',
                 prefixIcon: Icons.lock,
               ),
+              style: const TextStyle(
+                color: Colors.black,
+              ),
               onChanged: (value) => loginForm.password = value,
               validator: (value) {
                 if (value != null && value.length >= 6) return null;
-                return 'your password should most be 6 characters ';
+                return 'Your password should most be 6 characters ';
               },
             ),
           ],

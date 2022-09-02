@@ -2,6 +2,7 @@ import 'package:calory_tracker/model/model_nutrients.dart';
 
 class Product {
   Product({
+    this.id,
     this.code,
     this.imageUrl,
     required this.nutriments,
@@ -10,6 +11,7 @@ class Product {
     this.addedOn,
   });
 
+  final String? id;
   final String? code;
   final String? imageUrl;
   final Nutriments? nutriments;
@@ -18,6 +20,7 @@ class Product {
   final DateTime? addedOn;
 
   Product copyWith({
+    String? id,
     String? code,
     String? imageUrl,
     Nutriments? nutriments,
@@ -26,6 +29,7 @@ class Product {
     DateTime? addedOn,
   }) =>
       Product(
+        id: id ?? this.id,
         code: code ?? this.code,
         imageUrl: imageUrl ?? this.imageUrl,
         nutriments: nutriments ?? this.nutriments,
@@ -45,7 +49,8 @@ class Product {
         addedOn: json["added_on"],
       );
 
-  factory Product.fromFirebaseMap(Map<dynamic, dynamic> json) => Product(
+  factory Product.fromFirebaseMap(Map<dynamic, dynamic> json, String value) => Product(
+    id: value,
     code: json["code"] ?? '',
     imageUrl: json["image_url"] ?? '',
     nutriments: json["nutriments"] == null || json["nutriments"].isEmpty

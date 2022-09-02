@@ -40,6 +40,7 @@ class ThemeSelectProvider extends ChangeNotifier {
     } else {
       setLightTheme();
     }
+    notifyListeners();
   }
 
   bool getThemeBool() {

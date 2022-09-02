@@ -23,7 +23,7 @@ class MealsRepository {
       if (snapshot.exists) {
         final data = snapshot.value as Map<dynamic, dynamic>;
         data.forEach((key, value) {
-          productList.add(Product.fromFirebaseMap(value));
+          productList.add(Product.fromFirebaseMap(value, key));
         });
       } else {
         print('No data available.');
@@ -34,6 +34,15 @@ class MealsRepository {
       return productList;
     }
   }
+
+  Future<bool> deleteProductFromMeals(String userId, String mealName, String productId) async {
+    try {
+      DatabaseReference ref = FirebaseDatabase.instance.ref();
+      await ref.child('$userId/meals/$mealName/$productId').remove();
+      return true;
+    } catch (e) {
+      log(e.toString());
+      return false;
+    }
+  }
 }
-
-
