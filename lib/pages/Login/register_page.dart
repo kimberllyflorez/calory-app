@@ -4,6 +4,7 @@ import 'package:calory_tracker/providers/login_provider.dart';
 import 'package:calory_tracker/providers/user_info_provider.dart';
 import 'package:calory_tracker/repository/auth_repository.dart';
 import 'package:calory_tracker/repository/notification_repository.dart';
+import 'package:calory_tracker/theme/app_theme.dart';
 import 'package:flutter/material.dart';
 
 import 'package:provider/provider.dart';
@@ -32,13 +33,13 @@ class RegisterPage extends StatelessWidget {
                   onPressed: () => Navigator.pushReplacementNamed(context, 'login'),
                   style: ButtonStyle(
                     overlayColor: MaterialStateProperty.all(
-                      const Color(0xffb993d6).withOpacity(0.5),
+                       AppTheme.primary.withOpacity(0.5),
                     ),
                     shape: MaterialStateProperty.all(const StadiumBorder()),
                   ),
                   child: const Text(
                     'have an account yet?',
-                    style: TextStyle(color: Colors.deepPurple),
+                    style: TextStyle(color: AppTheme.primary),
                   ),
                 ),
               ],
@@ -83,7 +84,7 @@ class CardContainer extends StatelessWidget {
             onPressed: () => _onPressedLogin(context),
             shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(10)),
             disabledColor: Colors.grey,
-            color: const Color(0xffb993d6),
+            color: AppTheme.primary,
             child: const Text('create'), //loginForm.isLoaging ? 'wait plese' : 'Sign in'
           ),
         ],
@@ -238,11 +239,14 @@ class ColorBox extends StatelessWidget {
           bottomRight: Radius.circular(30),
           bottomLeft: Radius.circular(30),
         ),
-        gradient: LinearGradient(colors: [
-          Color(0xff8ca6db), //#//fffcdc////64b3f4
-          Color(0xffb993d6), //cd9a7c7////c2e59c
-
-        ]),
+        gradient: LinearGradient(
+          begin: Alignment.topCenter,
+          end: Alignment.bottomCenter,
+          colors: [
+            Color(0xFF4ECDC4),
+            Color(0xFF556270),
+          ],
+        ),
       ),
       child: Stack(
         children: [],

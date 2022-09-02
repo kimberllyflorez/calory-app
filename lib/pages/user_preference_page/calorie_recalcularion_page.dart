@@ -24,6 +24,7 @@ class _CalorieRecalculationPageState extends State<CalorieRecalculationPage> {
   late final TextEditingController controllerWeight;
   late int controllerGender;
   late int controllerActivity;
+  late int controllerGoalWeight;
 
   @override
   void initState() {
@@ -33,6 +34,7 @@ class _CalorieRecalculationPageState extends State<CalorieRecalculationPage> {
     controllerWeight = TextEditingController(text: userInfo.weight.toString());
     controllerGender = userInfo.gender ? 0 : 1;
     controllerActivity = userInfo.activityLevel;
+    controllerGoalWeight = userInfo.goalWeight;
     super.initState();
   }
 
@@ -94,7 +96,14 @@ class _CalorieRecalculationPageState extends State<CalorieRecalculationPage> {
             _ActivitySelector(
               selected: controllerActivity,
               onPressed: _onPressedActivity,
-            )
+            ),
+            const Divider(
+              indent: 50,
+              endIndent: 16,
+              thickness: 2,
+            ),
+            _GoalWeight(onPressed:_onPressedGoal, selected: controllerGoalWeight,)
+
           ],
         ),
       ),
@@ -126,6 +135,13 @@ class _CalorieRecalculationPageState extends State<CalorieRecalculationPage> {
     await PreferenceUtils.setInt(UserConstants.levelActivity, value);
     setState(() {
       controllerActivity = value;
+    });
+  }
+
+  _onPressedGoal(int value) async {
+    await PreferenceUtils.setInt(UserConstants.gainWeight, value);
+    setState(() {
+      controllerGoalWeight = value;
     });
   }
 }
@@ -239,6 +255,65 @@ class _ActivitySelector extends StatelessWidget {
     );
   }
 }
+
+class _GoalWeight extends StatelessWidget {
+  final int selected;
+  final Function(int) onPressed;
+
+  const _GoalWeight({
+    Key? key,
+    required this.onPressed,
+    required this.selected,
+  }) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    return Column(
+      children: [
+        Container(
+          margin: const EdgeInsets.only(left: 12),
+          child: Row(
+            children: const [
+              Icon(
+                PhosphorIcons.person_simple_run_fill,
+                size: 30,
+                color: AppTheme.formColor,
+              ),
+              SizedBox(width: 10),
+              Text(
+                'Select your goald ',
+                style: TextStyle(fontSize: 12),
+              ),
+            ],
+          ),
+        ),
+        Row(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            ButtonSelect(
+              nameButton: 'lose',
+              onPressed: () => onPressed(0),
+              select: selected == 0,
+            ),
+            const SizedBox(width: 5),
+            ButtonSelect(
+              nameButton: 'keep',
+              onPressed: () => onPressed(1),
+              select: selected == 1,
+            ),
+            const SizedBox(width: 5),
+            ButtonSelect(
+              nameButton: 'gain',
+              onPressed: () => onPressed(2),
+              select: selected == 2,
+            ),
+          ],
+        ),
+      ],
+    );
+  }
+}
+
 
 class ItemForm extends StatelessWidget {
   final Function(String)? onChanged;

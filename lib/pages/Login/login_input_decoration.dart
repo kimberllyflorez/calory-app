@@ -1,3 +1,4 @@
+import 'package:calory_tracker/theme/app_theme.dart';
 import 'package:flutter/material.dart';
 
 class InputDecorations {
@@ -8,14 +9,14 @@ class InputDecorations {
   }) {
     return InputDecoration(
       enabledBorder:const  UnderlineInputBorder(
-        borderSide: BorderSide(color: Colors.deepPurple),
+        borderSide: BorderSide(color: AppTheme.primary),
       ),
       focusedBorder: const  UnderlineInputBorder(
-        borderSide: BorderSide(color: Colors.deepPurple),
+        borderSide: BorderSide(color: AppTheme.primary),
       ),
       prefixIcon: prefixIcon != null ? Icon(
         prefixIcon,
-        color: Colors.deepPurple,
+        color:AppTheme.primary,
       ): null ,
       hintText: hintText,
       labelText: labeText,
