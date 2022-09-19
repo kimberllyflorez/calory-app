@@ -1,4 +1,4 @@
-import 'package:calory_tracker/home/ui/widgets/ExpandableWidget/expandable_ListFoods_Widget.dart';
+import 'package:calory_tracker/home/ui/widgets/ExpandableWidget/expandable_list_foods_wd.dart';
 import 'package:flutter/material.dart';
 
 class ListMealsWidget extends StatelessWidget {
