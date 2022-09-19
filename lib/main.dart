@@ -1,16 +1,18 @@
-import 'package:calory_tracker/providers/login_provider.dart';
-import 'package:calory_tracker/providers/theme_modo_provider.dart';
-import 'package:calory_tracker/providers/user_info_provider.dart';
-import 'package:calory_tracker/repository/auth_repository.dart';
-import 'package:calory_tracker/repository/notification_repository.dart';
-import 'package:calory_tracker/routes/routes.dart';
-import 'package:calory_tracker/theme/app_theme.dart';
+
+import 'package:calory_tracker/core/routes/routes.dart';
+import 'package:calory_tracker/core/theme/theme_modo_provider.dart';
+import 'package:calory_tracker/login/pages/login_page.dart';
+import 'package:calory_tracker/login/provider/login_provider.dart';
+import 'package:calory_tracker/login/provider/user_info_provider.dart';
+import 'package:calory_tracker/login/repository/auth_repository.dart';
+import 'package:calory_tracker/login/repository/notification_repository.dart';
+import 'package:calory_tracker/core/theme/app_theme.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
-import 'package:calory_tracker/providers/food_provider.dart';
-import 'package:calory_tracker/pages/pages.dart';
 import 'package:provider/provider.dart';
-import 'providers/products_provider.dart';
+
+import 'products/providers/food_provider.dart';
+import 'products/providers/products_provider.dart';
 
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
