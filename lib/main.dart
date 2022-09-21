@@ -1,7 +1,7 @@
 
 import 'package:calory_tracker/core/routes/routes.dart';
 import 'package:calory_tracker/core/theme/theme_modo_provider.dart';
-import 'package:calory_tracker/login/pages/login_page.dart';
+import 'package:calory_tracker/login/ui/page/login_page.dart';
 import 'package:calory_tracker/login/provider/login_provider.dart';
 import 'package:calory_tracker/login/provider/user_info_provider.dart';
 import 'package:calory_tracker/login/repository/auth_repository.dart';

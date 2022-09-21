@@ -1,6 +1,6 @@
-import 'package:calory_tracker/calorie_calculator/ui/user_preference_page.dart';
-import 'package:calory_tracker/home/ui/widgets/ExpandableWidget/list_meals_widget.dart';
-import 'package:calory_tracker/home/ui/widgets/percent_indicator_widget.dart';
+import 'package:calory_tracker/calorie_calculator/ui/pages/user_preference_page.dart';
+import 'package:calory_tracker/home/ui/widgets/calorie_bar_wd.dart';
+import 'package:calory_tracker/home/ui/widgets/home_meal_section_wd.dart';
 import 'package:flutter/material.dart';
 
 class HomePage extends StatelessWidget {
@@ -23,9 +23,9 @@ class HomePage extends StatelessWidget {
       body: SingleChildScrollView(
         child: Column(
           children: [
-            const CustomAppBar(),
+            const CalorieBar(),
              _FoodHistory(),
-             ListMealsWidget(),
+             HomeMealSection(),
           ],
         ),
       ),

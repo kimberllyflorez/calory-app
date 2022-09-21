@@ -1,5 +1,4 @@
 import 'package:calory_tracker/information_user/constants/user_constants.dart';
-
 import 'package:calory_tracker/core/helpers/preference.dart';
 import 'package:calory_tracker/information_user/models/information_user_model.dart';
 

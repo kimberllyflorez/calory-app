@@ -20,7 +20,7 @@ class Debouncer <T> {//clase generica
 
   set value(T val) {
     _value = val;
-    _timer?.cancel();//si hay valor e camnsela
+    _timer?.cancel();//si hay valor e consola
     _timer = Timer(duration, () => onValue!(_value!));//cuando se cumpla Tie se llama valor
   }
 }
